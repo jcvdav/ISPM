@@ -36,7 +36,7 @@ datos <- datos %>%
   group_by(id, Dia, Mes, Ano, Estado, Comunidad, Sitio, Latitud, Longitud, Habitat, Zonificacion, TipoProteccion, ANP, BuzoMonitor, HoraInicial, HoraFinal, ProfundidadInicial, ProfundidadFinal, Temperatura, Visibilidad, Corriente, Transecto) %>%
   summarize(N=n()) %>%
   select(-N) %>%
-    full_join(datos2, by ="id") %>%
+  full_join(datos2, by ="id") %>%
   left_join(abnt, by = "GeneroEspecie") %>%
   mutate(Talla = as.numeric(as.character(Talla)), Abundancia = as.numeric(as.character(Abundancia))) %>%
   mutate(Biomasa = Abundancia*a*(Talla^b)) %>%
@@ -45,7 +45,7 @@ datos <- datos %>%
 
 ```
 
-# Por zonificacion (Reserva vs Pesca)
+# Peces (Pesca vs. No Pesca)
 
 ## Densidad promedio por zona
 
@@ -131,95 +131,26 @@ ggplot(data = NT, aes(x = Ano, y = NT, col = Zonificacion))+
 
 \clearpage
 
-# Por sitio
-
-## Densidad promedio por sitio
+# Invertebrados
 
 ```{r}
 
-N <- datos %>%
-  group_by(Ano, Zonificacion, Sitio, Transecto) %>%
-  summarize(N1=sum(Abundancia)) %>%
-  group_by(Ano, Zonificacion, Sitio) %>%
-  summarize(N = mean(N1), NDS = sd(N1))
+datos_inv <- read.csv("./Datos/invertebrados_completado.csv", sep=",")%>%
+  mutate(id = paste(Dia, Mes, Ano, Sitio, Transecto))
 
-ggplot(data = N, aes(x = Ano, y = N, col = Zonificacion, factor = Sitio))+
-  geom_line()+
-  geom_point(aes(pch = Sitio))+
-  geom_errorbar(aes(ymin=N-NDS,ymax=N+NDS), width = 0.2)+
-  theme_bw()+
-  labs(x="Año", y="Densidad (org / transecto)")+
-  scale_color_brewer(palette = "Set1")
+datos_inv2 <- datos_inv %>%
+  select(id, Genero, Especie, GeneroEspecie, Abundancia) %>%
+  complete(id, nesting(Genero, Especie, GeneroEspecie), fill = list(Abundancia = 0))
 
-```
-
-## Riqueza promedio por sitio
-
-```{r}
-
-S <- datos %>%
-  group_by(Ano, Zonificacion, Sitio, Transecto, GeneroEspecie) %>%
-  summarize(S1 = n()) %>%
-  group_by(Ano, Zonificacion, Sitio, Transecto) %>%
-  summarize(S1 = n()) %>%
-  group_by(Ano, Zonificacion, Sitio) %>%
-  summarize(S = mean(S1), SDS = sd(S1))
-
-ggplot(data = S, aes(x = Ano, y = S, col = Zonificacion, factor = Sitio))+
-  geom_line()+
-  geom_point(aes(pch = Sitio)) +
-  geom_errorbar(aes(ymin=S-SDS,ymax=S+SDS), width = 0.2)+
-  theme_bw()+
-  labs(x="Año", y="Riqueza (especies / transecto)")+
-  scale_color_brewer(palette = "Set1")
-
-```
-
-## Biomasa promedio por sitio
-
-```{r}
-
-B <- datos %>%
-  group_by(Ano, Zonificacion, Sitio, Transecto) %>%
-  summarize(B1 = sum(Biomasa)) %>%
-  group_by(Ano, Zonificacion, Sitio) %>%
-  summarize(B = mean(B1, na.rm=T), BDS = sd(B1, na.rm=T))
-
-ggplot(data = B, aes(x = Ano, y = B, col = Zonificacion, factor = Sitio))+
-  geom_line()+
-  geom_point(aes(pch = Sitio)) +
-  geom_errorbar(aes(ymin=B-BDS,ymax=B+BDS), width = 0.2)+
-  theme_bw()+
-  labs(x="Año", y="Biomasa (gramos / transecto)")+
-  scale_color_brewer(palette = "Set1")
-
-```
-
-## Nivel trófico promedio por sitio
-
-```{r}
-
-NT <- datos %>%
-  group_by(Ano, Zonificacion, Sitio, Transecto) %>%
-  summarize(NT1 = mean(NT, na.rm=T)) %>%
-  group_by(Ano, Zonificacion, Sitio) %>%
-  summarize(NT = mean(NT1, na.rm=T), NTS = sd(NT1, na.rm=T))
-
-ggplot(data = NT, aes(x = Ano, y = NT, col = Zonificacion, factor = Sitio))+
-  geom_line()+
-  geom_point(aes(pch = Sitio)) +
-  geom_errorbar(aes(ymin=NT-NTS,ymax=NT+NTS), width = 0.2)+
-  theme_bw()+
-  labs(x="Año", y="Nivel trófico medio")+
-  scale_color_brewer(palette = "Set1")
-
-```
-
-
-```{r}
-
-primer = datos %>%
-  mutate()
+datos_inv <- datos_inv %>%
+  select(-GeneroEspecie, -Abundancia, -Genero, -Especie) %>%
+  group_by(id, Dia, Mes, Ano, Estado, Comunidad, Sitio, Latitud, Longitud, Habitat, Zonificacion, TipoProteccion, ANP, BuzoMonitor, HoraInicial, HoraFinal, ProfundidadInicial, ProfundidadFinal, Temperatura, Visibilidad, Corriente, Transecto) %>%
+  summarize(N=n()) %>%
+  select(-N) %>%
+  full_join(datos_inv2, by ="id") %>%
+  filter(!is.na(Abundancia)) %>%
+  group_by(id, Dia, Mes, Ano, Estado, Comunidad, Sitio, Latitud, Longitud, Habitat, Zonificacion, TipoProteccion, ANP, BuzoMonitor, HoraInicial, HoraFinal, ProfundidadInicial, ProfundidadFinal, Temperatura, Visibilidad, Corriente, Transecto, Genero, Especie, GeneroEspecie) %>%
+  summarize(Abundancia = sum(Abundancia))
 
 ```
 
