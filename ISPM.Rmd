@@ -1,0 +1,225 @@
+---
+title: "ISPM"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F, fig.height = 3, warning = F)
+```
+
+```{r}
+
+suppressPackageStartupMessages({
+  library(ggplot2)
+  library(dplyr)
+  library(tidyr)
+  library(MPAtools)
+  library(reshape)
+})
+
+```
+
+```{r}
+
+abnt <- read.csv("./Datos/12082016 ISPM Especifico.csv", sep = ";", stringsAsFactors = F) %>%
+  mutate(NT = as.numeric(NT), a = as.numeric(a), b=as.numeric(b))
+
+datos <- read.csv("./Datos/peces_completado.csv", sep=";")%>%
+  mutate(id = paste(Dia, Mes, Ano, Sitio, Transecto))
+
+datos2 <- datos %>%
+  select(id, Genero, Especie, GeneroEspecie, Talla, Abundancia) %>%
+  complete(id, nesting(Genero, Especie, GeneroEspecie), fill = list(Talla = NA, Abundancia = 0))
+
+datos <- datos %>%
+  select(-GeneroEspecie, -Talla, -Abundancia, -Genero, -Especie) %>%
+  group_by(id, Dia, Mes, Ano, Estado, Comunidad, Sitio, Latitud, Longitud, Habitat, Zonificacion, TipoProteccion, ANP, BuzoMonitor, HoraInicial, HoraFinal, ProfundidadInicial, ProfundidadFinal, Temperatura, Visibilidad, Corriente, Transecto) %>%
+  summarize(N=n()) %>%
+  select(-N) %>%
+    full_join(datos2, by ="id") %>%
+  left_join(abnt, by = "GeneroEspecie") %>%
+  mutate(Talla = as.numeric(as.character(Talla)), Abundancia = as.numeric(as.character(Abundancia))) %>%
+  mutate(Biomasa = Abundancia*a*(Talla^b)) %>%
+  mutate(TransectNumber = Transecto, Site = Comunidad, Year = Ano, Zone = Zonificacion, SizeClass = Talla) %>%
+  filter(!is.na(Abundancia))
+
+```
+
+# Por zonificacion (Reserva vs Pesca)
+
+## Densidad promedio por zona
+
+```{r}
+
+N <- datos %>%
+  group_by(Ano, Zonificacion, Transecto) %>%
+  summarize(N1=sum(Abundancia)) %>%
+  group_by(Ano, Zonificacion) %>%
+  summarize(N = mean(N1), NDS = sd(N1))
+
+ggplot(data = N, aes(x = Ano, y = N, col = Zonificacion))+
+  geom_line()+
+  geom_point()+
+  geom_errorbar(aes(ymin=N-NDS,ymax=N+NDS), width = 0.2)+
+  theme_bw()+
+  labs(x="Año", y="Densidad (org / transecto)")+
+  scale_color_brewer(palette = "Set1")
+
+```
+
+## Riqueza promedio por zona
+
+```{r}
+
+S <- datos %>%
+  group_by(Ano, Zonificacion, Transecto, GeneroEspecie) %>%
+  summarize(S1 = n()) %>%
+  group_by(Ano, Zonificacion, Transecto) %>%
+  summarize(S1 = n()) %>%
+  group_by(Ano, Zonificacion) %>%
+  summarize(S = mean(S1), SDS = sd(S1))
+
+ggplot(data = S, aes(x = Ano, y = S, col = Zonificacion))+
+  geom_line()+
+  geom_point()+
+  geom_errorbar(aes(ymin=S-SDS,ymax=S+SDS), width = 0.2)+
+  theme_bw()+
+  labs(x="Año", y="Riqueza (especies / transecto)")+
+  scale_color_brewer(palette = "Set1")
+
+```
+
+## Biomasa promedio por zona
+
+```{r}
+
+B <- datos %>%
+  group_by(Ano, Zonificacion, Transecto) %>%
+  summarize(B1 = sum(Biomasa)) %>%
+  group_by(Ano, Zonificacion) %>%
+  summarize(B = mean(B1, na.rm=T), BDS = sd(B1, na.rm=T))
+
+ggplot(data = B, aes(x = Ano, y = B, col = Zonificacion))+
+  geom_line()+
+  geom_point() +
+  geom_errorbar(aes(ymin=B-BDS,ymax=B+BDS), width = 0.2)+
+  theme_bw()+
+  labs(x="Año", y="Biomasa (gramos / transecto)")+
+  scale_color_brewer(palette = "Set1")
+
+```
+
+## Nivel trófico promedio por zona
+
+```{r}
+
+NT <- datos %>%
+  group_by(Ano, Zonificacion, Transecto) %>%
+  summarize(NT1 = mean(NT, na.rm=T)) %>%
+  group_by(Ano, Zonificacion) %>%
+  summarize(NT = mean(NT1, na.rm=T), NTS = sd(NT1, na.rm=T))
+
+ggplot(data = NT, aes(x = Ano, y = NT, col = Zonificacion))+
+  geom_line()+
+  geom_point() +
+  geom_errorbar(aes(ymin=NT-NTS,ymax=NT+NTS), width = 0.2)+
+  theme_bw()+
+  labs(x="Año", y="Nivel trófico medio")+
+  scale_color_brewer(palette = "Set1")
+
+```
+
+\clearpage
+
+# Por sitio
+
+## Densidad promedio por sitio
+
+```{r}
+
+N <- datos %>%
+  group_by(Ano, Zonificacion, Sitio, Transecto) %>%
+  summarize(N1=sum(Abundancia)) %>%
+  group_by(Ano, Zonificacion, Sitio) %>%
+  summarize(N = mean(N1), NDS = sd(N1))
+
+ggplot(data = N, aes(x = Ano, y = N, col = Zonificacion, factor = Sitio))+
+  geom_line()+
+  geom_point(aes(pch = Sitio))+
+  geom_errorbar(aes(ymin=N-NDS,ymax=N+NDS), width = 0.2)+
+  theme_bw()+
+  labs(x="Año", y="Densidad (org / transecto)")+
+  scale_color_brewer(palette = "Set1")
+
+```
+
+## Riqueza promedio por sitio
+
+```{r}
+
+S <- datos %>%
+  group_by(Ano, Zonificacion, Sitio, Transecto, GeneroEspecie) %>%
+  summarize(S1 = n()) %>%
+  group_by(Ano, Zonificacion, Sitio, Transecto) %>%
+  summarize(S1 = n()) %>%
+  group_by(Ano, Zonificacion, Sitio) %>%
+  summarize(S = mean(S1), SDS = sd(S1))
+
+ggplot(data = S, aes(x = Ano, y = S, col = Zonificacion, factor = Sitio))+
+  geom_line()+
+  geom_point(aes(pch = Sitio)) +
+  geom_errorbar(aes(ymin=S-SDS,ymax=S+SDS), width = 0.2)+
+  theme_bw()+
+  labs(x="Año", y="Riqueza (especies / transecto)")+
+  scale_color_brewer(palette = "Set1")
+
+```
+
+## Biomasa promedio por sitio
+
+```{r}
+
+B <- datos %>%
+  group_by(Ano, Zonificacion, Sitio, Transecto) %>%
+  summarize(B1 = sum(Biomasa)) %>%
+  group_by(Ano, Zonificacion, Sitio) %>%
+  summarize(B = mean(B1, na.rm=T), BDS = sd(B1, na.rm=T))
+
+ggplot(data = B, aes(x = Ano, y = B, col = Zonificacion, factor = Sitio))+
+  geom_line()+
+  geom_point(aes(pch = Sitio)) +
+  geom_errorbar(aes(ymin=B-BDS,ymax=B+BDS), width = 0.2)+
+  theme_bw()+
+  labs(x="Año", y="Biomasa (gramos / transecto)")+
+  scale_color_brewer(palette = "Set1")
+
+```
+
+## Nivel trófico promedio por sitio
+
+```{r}
+
+NT <- datos %>%
+  group_by(Ano, Zonificacion, Sitio, Transecto) %>%
+  summarize(NT1 = mean(NT, na.rm=T)) %>%
+  group_by(Ano, Zonificacion, Sitio) %>%
+  summarize(NT = mean(NT1, na.rm=T), NTS = sd(NT1, na.rm=T))
+
+ggplot(data = NT, aes(x = Ano, y = NT, col = Zonificacion, factor = Sitio))+
+  geom_line()+
+  geom_point(aes(pch = Sitio)) +
+  geom_errorbar(aes(ymin=NT-NTS,ymax=NT+NTS), width = 0.2)+
+  theme_bw()+
+  labs(x="Año", y="Nivel trófico medio")+
+  scale_color_brewer(palette = "Set1")
+
+```
+
+
+```{r}
+
+primer = datos %>%
+  mutate()
+
+```
+

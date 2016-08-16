@@ -1,0 +1,223 @@
+Orden ;Familia;Genero;Especie;Genero + Especie;Nombre Común ;Región;Recurso Deportivo;Recurso Pesquero;Recurso Ornamental;NOM-059;Peligro crítico;En Peligro;Vulnerable;Casi Amenazada;Preocupación menor;Listada. Datos deficientes;No Evaluada;Carta Nacional Pesquera (Grupo);Exóticos;Endémicos;Herbívoros ;Nivel Trofico;a;b
+Perciformes;Pomacentridae;Abudefduf;saxatilis;Abudefduf saxatilis;Sargento;SAM;;;;NO;;;;;x;;;NINGUNO;;;;3.8;0.0182;3.05
+Myliobatiformes;Myliobatidae;Aetobatus;narinari;Aetobatus narinari;Raya pinta;SAM;;x;;NO;;;;x;;;;"Rayas y Mantas (Especie objetivo); Robalo y chucumite, Bandera y bagres (Especie asociada)";;;;4.2;ND;ND
+Perciformes;Haemulidae;Anisotremus;virginicus;Anisotremus virginicus;Margarita;SAM;;;;NO;;;;;x;;;NINGUNO;;;;3.6;0.01445;3.06
+Perciformes;Haemulidae;Anisotremus;surinamensis;Anisotremus surinamensis;Chan Kay;SAM;;x;;NO;;;;;;;x;NINGUNO;;;;3.06;0.0166;3.05
+Tetraodontiformes;Balistidae;Balistes;capriscus;Balistes capriscus;Xcochin gris;SAM;;;;NO;;;x;;;;;NINGUNO;;;;4.1;0.01905;2.93
+Tetraodontiformes;Balistidae;Balistes;vetula;Balistes vetula;Xcochin azul;SAM;;;;NO;;;;x;;;;NINGUNO;;;;3.8;0.02692;2.95
+Perciformes;Labridae;Bodianus;rufus;Bodianus rufus;Boquinete de arrecife;SAM;;;;NO;;;;;x;;;Huachinangos y pargos, Sierra y peto (Especie asociada);;;;3.7;ND;ND
+Tetraodontiformes;Balistidae;Canthidermis;sufflamen;Canthidermis sufflamen;Xcochin blanco;SAM;;;;NO;;;;;x;;;NINGUNO;;;;3.5;0.01995;2.94
+Perciformes;Carangidae;Caranx;ruber;Caranx ruber;Cojinuda;SAM;;x;;NO;;;;;x;;;NINGUNO;;;;4.3;0.01698;2.94
+Perciformes;Carangidae;Caranx;latus;Caranx latus;Jurel ojón;SAM;;x;;NO;;;;;x;;;"Jurel y cojinuda (Especie objetivo); Huachinango y pargo, Trucha de mar, Sierra y peto (Especie asociada)";;;;4.2;0.02188;2.94
+Perciformes;Carangidae;Caranx;bartholomaei;Caranx bartholomaei;Cojinuda amarilla;SAM;;x;;NO;;;;;x;;;Sierra y peto (Especie asociada);;;;4.5;0.02188;2.93
+Perciformes;Carangidae;Caranx;crysos;Caranx crysos;Cojinuda gris;SAM;;;;NO;;;;;x;;;"Jurel y cojinuda (Especie objetivo); Sierra y peto (Especie asociada)";;;;4.1;0.01862;2.95
+Perciformes;Serranidae;Cephalopholis;cruentata;Cephalopholis cruentata;Cabrilla de roca;SAM;;x;;NO;;;;;x;;;Mero, negrillo y abadejo (Especie asociada);;;;4.3;0.01096;3.07
+Perciformes;Serranidae;Cephalopholis;fulva;Cephalopholis fulva;Manzanita;SAM;;x;;NO;;;;;x;;;Huachinangos y pargos, Mero, negrillo y abadejo (Especie objetivo) ;;;;4.1;0.01;3.02
+Perciformes;Serranidae;Epinephelus;guttatus;Epinephelus guttatus;Cabrilla payaso;SAM;;x;;NO;;;;;x;;;Mero, negrillo y abadejo (Especie objetivo);;;;3.8;0.01148;3.04
+Myliobatiformes;Dasyatidae;Dasyatis;americana;Dasyatis americana;Balá;SAM;;x;;NO;;;;;;x;;"Robalo y chucumite (Especie objetivo); Jurel y cojinuda, Bandera y bagres (Especies asociada)";;;;3.5;ND;ND
+Perciformes;Serranidae;Epinephelus;adscensionis;Epinephelus adscensionis;Cabrilla lunar;SAM;;x;;NO;;;;;x;;;"Mero, negrillo y abadejo (Especie objetivo); Huachinango y pargo (Especie asociada)";;;;3.5;0.01349;3.09
+Perciformes;Serranidae;Epinephelus;striatus;Epinephelus striatus;Mero criollo;SAM;;x;;NO;;x;;;;;;Mero, negrillo y abadejo (Especie objetivo);;;;4.1;0.01148;3.04
+Perciformes;Serranidae;Epinephelus;morio;Epinephelus morio;Mero mestizo;SAM;;x;;NO;;;;x;;;;"Mero, negrillo y abadejo (Especie objetivo); Huachinango y pargo (Especie asociada)";;;;3.5;0.01413;3.01
+Perciformes;Gerreidae;Gerres;cinereus;Gerres cinereus;Mojarra blanca;SAM;;x;;NO;;;;;x;;;Trucha de mar, Lisa y lebrancha (Especie asociada);;;;3.5;0.01148;3.06
+Orectolobiformes;Ginglymostomatidae;Ginglymostoma;cirratum;Ginglymostoma cirratum;Tiburón gata;SAM;;x;;NO;;;;;;;x;NINGUNO;;;;4.2;0.00417;3.08
+Perciformes;Grammatidae;Gramma;loreto;Gramma loreto;Mariposa gallo;SAM;;;;NO;;;;;x;;;NINGUNO;;;;3.3;0.01122;3.04
+Perciformes;Haemulidae;Haemulon;flavolineatum;Haemulon flavolineatum;Doradito;SAM;;x;;NO;;;;;;;x;Huachinango y pargo (Especies asociada);;;;3.5;0.01318;3
+Perciformes;Haemulidae;Haemulon;plumierii;Haemulon plumierii;Matagato;SAM;;x;;NO;;;;;;;x;Huachinango y pargo, Jurel y cojinuda, Sierra y peto, Mero, negrillo y abadejo (Especie asociada);;;;3.8;0.01479;2.98
+Perciformes;Haemulidae;Haemulon;sciurus;Haemulon sciurus;Chac-chi líneas azules;SAM;;x;;NO;;;;;;;x;Huachinango y pargo (Especies asociada);;;;3.5;0.01549;2.98
+Perciformes;Haemulidae;Haemulon;aurolineatum;Haemulon aurolineatum;Zotito;SAM;;;;NO;;;;;x;;;Huachinango y pargo (Especies asociada);;;;4.4;0.01514;2.99
+Perciformes;Haemulidae;Haemulon;album;Haemulon album;Zapatero;SAM;;x;;NO;;;;;;;x;NINGUNO;;;;3.3;0.0123;2.99
+Perciformes;Haemulidae;Haemulon;parra;Haemulon parra;Barraza;SAM;;x;;NO;;;;;x;;;NINGUNO;;;;3.5;0.01288;3.02
+Perciformes;Haemulidae;Haemulon;melanurum;Haemulon melanurum;Zote;SAM;;;;NO;;;;;x;;;NINGUNO;;;;2.2;0.01698;3
+Perciformes;Haemulidae;Haemulon;macrostomum;Haemulon macrostomum;Chac-chi de cueva;SAM;;;;NO;;;;;x;;;Huachinango y pargo (Especies asociada);;;;3.3;0.01549;3.03
+Perciformes;Haemulidae;Haemulon;chrysargyreum;Haemulon chrysargyreum;Ronco boca chica;SAM;;;;NO;;;;;x;;;Huachinango y pargo (Especies asociada);;;;3.5;0.01259;2.99
+Perciformes;Haemulidae;Haemulon;carbonarium;Haemulon carbonarium;Chac-chi cola negra;SAM;;x;;NO;;;;;x;;;NINGUNO;;;;3.7;0.01738;2.98
+Perciformes;Haemulidae;Haemulon;striatum;Haemulon striatum;Ronco rayado;SAM;;;;NO;;;;;x;;;NINGUNO;;;;3.4;ND;ND
+Perciformes;Pomacanthidae;Holacanthus;ciliaris;Holacanthus ciliaris;Angel reina;SAM;;;;NO;;;;;x;;;NINGUNO;;;;3;0.0309;2.89
+Perciformes;Pomacanthidae;Holacanthus;tricolor;Holacanthus tricolor;Chabelita tricolor;SAM;;;;NO;;;;;x;;;NINGUNO;;;;3;0.03388;2.9
+Perciformes;Labridae;Lachnolaimus;maximus;Lachnolaimus maximus;Boquinete;SAM;;x;;NO;;;x;;;;;Huachiango y pargo, Trucha de mar, Sierra y peto (Especie asociada);;;;4.2;0.02138;2.98
+Perciformes;Lutjanidae;Lutjanus;apodus;Lutjanus apodus;Pargo amarillo;SAM;;x;;NO;;;;;;;x;Huachinango y pargo (Especies objetivo);;;;4.3;0.01413;2.98
+Perciformes;Lutjanidae;Lutjanus;mahogoni;Lutjanus mahogoni;Pargo ojón;SAM;;x;;NO;;;;;;;x;NINGUNO;;;;4.3;0.01698;2.96
+Perciformes;Lutjanidae;Lutjanus;griseus;Lutjanus griseus;Pargo mulato;SAM;;x;;NO;;;;;;;x;"Huachinango y pargo (Especie objetivo); Robalo y chucumite, Jurel y cojinuda, Sierra y peto, Mero, negrillo y abadejo, Bandera y bagres (Especie asociada)";;;;4.2;0.01413;2.97
+Perciformes;Lutjanidae;Lutjanus;synagris;Lutjanus synagris;Pargo rayado;SAM;;x;;NO;;;;;;;x;"Huachinango y pargo (Especie objetivo); Jurel y cojinuda, Sierra y peto, Mero, negrillo y abadejo, Bandera y bagres (Especie asociada)";;;;3.8;0.01445;2.97
+Perciformes;Lutjanidae;Lutjanus;cyanopterus;Lutjanus cyanopterus;Pargo cubera;SAM;;x;;NO;;;x;;;;;"Huachinango y pargo (Especie objetivo); Jurel y cojinuda (Especie asociada)";;;;4.4;ND;ND
+Perciformes;Lutjanidae;Lutjanus;analis;Lutjanus analis;Pargo lunar;SAM;;x;;NO;;;x;;;;;"Huachinango y pargo (Especie objetivo); Jurel y cojinuda, Mero, negrillo y abadejo (Especie asociada)";;;;3.9;0.01349;2.97
+Perciformes;Lutjanidae;Lutjanus;jocu;Lutjanus jocu;Pargo llorón;SAM;;x;;NO;;;;;;;x;"Huachinango y pargo (Especie objetivo); Jurel y cojinuda, Mero, negrillo y abadejo (Especie asociada)";;;;4.4;0.01514;2.98
+Tetraodontiformes;Balistidae;Melichthys ;niger;Melichthys niger;Xcochin negro;SAM;;;;NO;;;;;x;;;NINGUNO;;;;2.4;0.02344;2.95
+Perciformes;Pomacentridae;Microspathodon;chrysurus;Microspathodon chrysurus;Damisela cola amarilla;SAM;;;;NO;;;;;x;;;NINGUNO;;;;2.1;0.02291;3.02
+Perciformes;Serranidae;Mycteroperca;phenax;Mycteroperca phenax;Escobillo;SAM;;x;;NO;;;;;x;;;NINGUNO;;;;4.5;ND;ND
+Perciformes;Serranidae;Mycteroperca;bonaci;Mycteroperca bonaci;Abadejo;SAM;;x;;NO;;;;x;;;;"Mero, negrillo y abadejo (Especie objetivo); Huachinango y pargo (Especie asociada)";;;;4.3;0.01;3.05
+Perciformes;Serranidae;Mycteroperca;tigris;Mycteroperca tigris;Mero tigre;SAM;;x;;NO;;;;;x;;;NINGUNO;;;;4.5;0.01096;3.06
+Perciformes;Serranidae;Mycteroperca;interstitialis;Mycteroperca interstitialis;Mero boca amarilla;SAM;;x;;NO;;;x;;;;;NINGUNO;;;;4.5;0.00631;3.06
+Perciformes;Lutjanidae;Ocyurus;chrysurus;Ocyurus chrysurus;Rubia;SAM;;x;;NO;;;;;;;x;Huachinango y pargo (Especie objetivo), Robalo y chucumite, Trucha de mar, Sierra y peto, Mero, negrillo y abadejo (Especie asociada) ;;;;4;0.01479;2.95
+Perciformes;Pomacanthidae;Pomacanthus;arcuatus;Pomacanthus arcuatus;Angel gris;SAM;;;;NO;;;;;x;;;Huachinango y pargo (Especies asociada);;;;3.2;0.03236;2.92
+Perciformes;Pomacanthidae;Pomacanthus;paru;Pomacanthus paru;Angel francés;SAM;;;;NO;;;;;x;;;Huachinango y pargo (Especies asociada);;;;2.8;0.0309;2.95
+Scorpaeniformes;Scorpaenidae;Pterois;volitans;Pterois volitans;Pez león;SAM;;x;;NO;;;;;;;x;NINGUNO;x;;;4.4;0.01122;3.09
+Perciformes;Scaridae;Scarus;coeruleus;Scarus coeruleus;Loro azul;SAM;;;;NO;;;;;x;;;NINGUNO;;;x;2;0.01288;3.04
+Perciformes;Scaridae;Scarus;vetula;Scarus vetula;Loro bigotón;SAM;;;;NO;;;;;x;;;NINGUNO;;;x;2;0.0138;3.03
+Perciformes;Scaridae;Scarus;coelestinus;Scarus coelestinus;Loro medianoche;SAM;;;;NO;;;;;;x;;NINGUNO;;;x;2;0.01585;3.05
+Perciformes;Scombridae;Scomberomorus;regalis;Scomberomorus regalis;Sierra;SAM;;x;;NO;;;;;x;;;Sierra y peto (Especie objetivo);;;;4.5;0.00955;3.01
+Perciformes;Scaridae;Sparisoma;viride;Sparisoma viride;Loro lunar;SAM;;;;NO;;;;;x;;;NINGUNO;;;x;2;0.01349;3.04
+Perciformes;Scaridae;Sparisoma;aurofrenatum;Sparisoma aurofrenatum;Loro aleta roja;SAM;;;;NO;;;;;x;;;NINGUNO;;;x;2;0.01072;3.12
+Perciformes;Sphyraenidae;Sphyraena;barracuda;Sphyraena barracuda;Barracuda;SAM;;x;;NO;;;;;x;;;Huachinango y pargo (Especies asociada);;;;4.5;0.00851;2.92
+Perciformes;Labridae;Thalassoma;bifasciatum;Thalassoma bifasciatum;Vieja cabeza azul;SAM;;;;NO;;;;;x;;;NINGUNO;;;;3.3;0.00891;3.01
+Perciformes;Serranidae;Epinephelus;itajara;Epinephelus itajara;Cherna;SAM;;x;;NO;x;;;;;;;"Mero, negrillo o abadejo (Especie objetivo); Sierra y peto,  Bandera y bagres (Especie asociada)";;;;4.1;0.01072;3.04
+Perciformes;Haemulidae;Anisotremus ;davidsonii;Anisotremus davidsonii;Sargo rayado;PBC;x;x;;NO;;;;;x;;;NINGUNO;;;;3.5;ND;ND
+Perciformes;Malacanthidae;Caulolatilus;princeps;Caulolatilus princeps;Pez blanco;PBC;;x;;NO;;;;;x;;;Rocotes (Especies asociadas);;;;3.9;ND;ND
+Perciformes;Pomacentridae;Chromis;punctipinnis;Chromis punctipinnis;Castañeta herrera;PBC;;;;NO;;;;;x;;;NINGUNO;;;;2.7;0.01514;2.99
+Perciformes;Embiotocidae;Embiotoca;jacksoni;Embiotoca jacksoni;Mojarra negra;PBC;;;;NO;;;;;;;x;NINGUNO;;;;3.3;0.02818;3.03
+Perciformes;Kyphosidae;Girella;nigricans;Girella nigricans;Chopa verde;PBC;;x;;NO;;;;;x;;;NINGUNO;;;x;2;0.01585;3.03
+Heterodontiformes;Heterodontidae;Heterodontus;francisci;Heterodontus francisci;Tiburón cornudo;PBC;;x;;NO;;;;;;x;;NINGUNO;;;;3.2;0.00389;3.12
+Perciformes;Pomacentridae;Hypsypops;rubicundus;Hypsypops rubicundus;Garibaldi;PBC;;;x;NO;;;;;x;;;NINGUNO;;;;3.2;0.02089;3
+Perciformes;Serranidae;Mycteroperca;xenarcha;Mycteroperca xenarcha;Garropa jaspeada;PBC;x;x;;NO;;;;;x;;;NINGUNO;;;;4.5;ND;ND
+Scorpaeniformes;Hexagrammidae;Ophiodon;elongatus;Ophiodon elongatus;Molva;PBC;;x;;NO;;;;;;;x;Rocotes (Especies asociadas);;;;4.3;ND;ND
+Perciformes;Labridae;Oxyjulis;californica;Oxyjulis californica;Señorita;PBC;;;;NO;;;;;x;;;NINGUNO;;;;3.1;0.00447;3.14
+Perciformes;Serranidae;Paralabrax;clathratus;Paralabrax clathratus;Cabrilla sargacera;PBC;;x;;NO;;;;;x;;;NINGUNO;;;;3.9;0.00794;3.04
+Perciformes;Serranidae;Paralabrax;nebulifer;Paralabrax nebulifer;Verdillo;PBC;;x;;NO;;;;;x;;;Rocotes (Especies asociadas);;;;3.5;ND;ND
+Perciformes;Embiotocidae;Rhacochilus;vacca;Rhacochilus vacca;Mojarra muellera ;PBC;;x;;NO;;;;;x;;;NINGUNO;;;;3.4;0.0195;3.02
+Rajiformes;Rhinobatidae;Rhinobatos;productus;Rhinobatos productus;Guitarra viola;PBC;;x;;NO;;;;x;;;;Peces marinos de escama: Golfo de México y Caribe (Especies asociadas);;;;3.6;ND;ND
+Scorpaeniformes;Cottidae;Scorpaenichthys;marmoratus;Scorpaenichthys marmoratus;Cabezón;PBC;;x;;NO;;;;;;;x;NINGUNO;;;;3.6;ND;ND
+Scorpaeniformes;Sebastidae;Sebastes;auriculatus;Sebastes auriculatus;Rocote moreno;PBC;x;x;;NO;;;;;;;x;NINGUNO;;;;4;0.00977;3.07
+Scorpaeniformes;Sebastidae;Sebastes;carnatus;Sebastes carnatus;Rocote amarillo;PBC;x;x;;NO;;;;;;;X;NINGUNO;;;;3.6;ND;ND
+Scorpaeniformes;Sebastidae;Sebastes;chrysomelas;Sebastes chrysomelas;Rocote mulato;PBC;x;x;;NO;;;;;;;x;NINGUNO;;;;3.5;0.00977;3.08
+Scorpaeniformes;Sebastidae;Sebastes;flavidus;Sebastes flavidus;Rocote cola amarilla;PBC;x;x;;NO;;;;;;;x;NINGUNO;;;;4.2;ND;ND
+Scorpaeniformes;Sebastidae;Sebastes;rastrelliger;Sebastes rastrelliger;Rocote olivo;PBC;x;x;;NO;;;;;;;x;Rocotes (Especies objetivo);;;;3.9;ND;ND
+Scorpaeniformes;Sebastidae;Sebastes;serranoides;Sebastes serranoides;Rocote falsa cabrilla;PBC;x;x;;NO;;;;;;;x;Rocotes (Especies asociadas);;;;4.2;0.00832;3.04
+Perciformes;Labridae;Semicossyphus;pulcher;Semicossyphus pulcher;Vieja californiana;PBC;;x;;NO;;;x;;;;;Rocotes (Especies asociadas);;;;3.6;ND;ND
+Squatiniformes;Squatinidae;Squatina;californica;Squatina californica;Angelote del Pacífico;PBC;;x;;NO;;;;x;;;;NINGUNO;;;;4.1;0.00741;3.04
+Perciformes;Polyprionidae;Stereolepis;gigas;Stereolepis gigas;Mero pescada;PBC;x;x;;NO;x;;;;;;;NINGUNO;;;;4.5;ND;ND
+Perciformes;Labridae;Halichoeres;semicinctus;Halichoeres semicinctus;Vieja puntos negros / Señorita roquera;PBC;;;;NO;;;;;x;;;NINGUNO;;;;3.3;0.01;3.08
+Perciformes;Serranidae;Mycteroperca;jordani;Mycteroperca jordani;Baya;PBC;x;x;;NO;;x;;;;;;Huachinango y pargos (Especie Asociada);;;;4.5;ND;ND
+Perciformes;Pomacentridae;Abudefduf;troschelli;Abudefduf troschelii;Mulegino;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;3;0.01995;3
+Perciformes;Chaenopsidae;Acanthemblemaria ;crockeri;Acanthemblemaria crockeri;Blenia;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;3.4;0.00468;3
+Perciformes;Chaenopsidae;Acanthemblemaria ;hancocki;Acanthemblemaria hancocki;Blenia;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;3.4;0.00457;3.08
+Perciformes;Acanthuridae;Acanthurus;nigricans;Acanthurus nigricans;Cirujano cariblanco / Navajon cariblanco;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;2;0.02512;2.93
+Perciformes;Acanthuridae;Acanthurus;triostegus;Acanthurus triostegus;Cirujano rayado/ Navajón carcelario;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;2.8;0.02138;2.96
+Perciformes;Acanthuridae;Acanthurus;xanthopterus;Acanthurus xanthopterus;Cirujano aleta amarilla;GdC;;x;;NO;;;;;x;;;"Huachinango y pargos (Especie Asociada); Robalo (Centropomidae)(Especie Asociada)";;;;2.9;0.01862;3
+Myliobatiformes;Myliobatidae;Aetobatus ;narinari;Aetobatus narinari;Raya pinta/chucho pintado;GdC;;x;;NO;;;;x;;;;NINGUNO;;;;4.2;ND;ND
+Perciformes;Serranidae;Alphestes;immaculatus;Alphestes immaculatus;Cabrilla rosa;GdC;;x;x;NO;;;;;x;;;Huachinango y pargos (Especie Asociada);;;;3.5;0.01096;3.04
+Perciformes;Haemulidae;Anisotremus;davidsonii;Anisotremus davidsonii;Canelo;GdC;;x;;NO;;;;;x;;;NINGUNO;;;;3.5;ND;ND
+Perciformes;Haemulidae;Anisotremus;interruptus;Anisotremus interruptus;Burrito/Burro ronco;GdC;;x;;NO;;;;;x;;;"Huachinango y pargos (Especie Asociada); Robalo (Centropomidae)(Especie Asociada)";;;;3.5;0.02455;3.06
+Perciformes;Haemulidae;Anisotremus;taeniatus;Anisotremus taeniatus;Burro rayado;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;4.2;0.01622;3.04
+Perciformes;Apogonidae;Apogon;pacificus;Apogon pacificus;Cardenal;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;3.4;0.01023;3.09
+Perciformes;Apogonidae;Apogon;retrosella;Apogon retrosella;Cardenal de Cortés;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;3.5;0.01122;3.12
+Tetraodontiformes;Tetraodontidae;Arothron; meleagris;Arothron meleagris;Botete globo;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;3.6;0.02692;2.88
+Tetraodontiformes;Balistidae;Balistes;polylepsis;Balistes polylepis;Cochito;GdC;;x;x;NO;;;;;x;;;Huachinango y pargos (Especie Asociada);;;;3.3;0.02399;2.89
+Perciformes;Labridae;Bodianus;diplotaenia;Bodianus diplotaenia;Vieja /  Vieje de piedra;GdC;;x;x;NO;;;;;x;;;NINGUNO;;;;3.4;0.0123;3.04
+Perciformes;Sparidae;Calamus;brachysomus;Calamus brachysomus;Mojarra blanca;GdC;;x;;NO;;;;;x;;;"Jaiba (Especie Asociada); Huachinango y pargos (Especie Asociada); Robalos (Centropomidae)(Especie Asociada); Sierras (Scrombridae)(Especie Asociada)";;;;3.8;ND;ND
+Tetraodontiformes;Monacanthidae;Cantherhines;dumerilii;Cantherhines dumerilii;Lija vagabunda/ Puerco Isleño;GdC;;;;NO;;;;;x;;;NINGUNO;;;;3.1;0.02455;2.92
+Tetraodontiformes;Tetraodontidae;Canthigaster;punctatissima;Canthigaster punctatissima;Botete bonito;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;3.1;0.0138;3.04
+Perciformes;Carangidae;Caranx;caballus;Caranx caballus;Jurel bonito;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;4.1;0.02089;2.98
+Perciformes;Malacanthidae;Caulolatilus;princeps;Caulolatilus princeps;Pierna;GdC;;x;;NO;;;;;x;;;NINGUNO;;;;3.9;ND;ND
+Perciformes;Serranidae;Cephalopholis;panamensis;Cephalopholis panamensis;Cabrilla piedrera / mero panameño / Enjambre;GdC;;x;;NO;;;;;x;;;Huachinango y pargos (Especie Asociada);;;;4.2;0.01445;3.07
+Perciformes;Chaetodontidae;Chaetodon;humeralis;Chaetodon humeralis;Mariposa muñeca;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;2.7;0.02188;3.02
+Perciformes;Sciaenidae;Cheilotrema ;saturnum;Cheilotrema saturnum;Corvina roncacho/Corvina negra;GdC;;;;NO;;;;;;x;;NINGUNO;;;;3.6;0.00912;3.1
+Perciformes;Pomacentridae;Chromis;atrilobata;Chromis atrilobata;Castaña cola de tijera;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;3.4;0.01413;3.06
+Perciformes;Pomacentridae;Chromis;limbaughi;Chromis limbaughi;Castaña mexicana;GdC;;;x;SI;;;;;x;;;NINGUNO;;x;;3.4;0.01549;2.98
+Perciformes;Cirrhitidae;Cirrhitichthys;oxycephalus;Cirrhitichthys oxycephalus;Halcón de coral;GdC;;;x;NO;;;;;;;x;NINGUNO;;;;4;0.0138;3.02
+Perciformes;Cirrhitidae;Cirrhitus;rivulatus;Cirrhitus rivulatus;Chino mero;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;4;ND;ND
+Perciformes;Tripterygiidae;Crocodilichthys;gracilis;Crocodilichthys gracilis;Tres aletas/Lagartija tres aletas;GdC;;;;NO;;;;;x;;;NINGUNO;;;;2.7;0.00562;3.03
+Perciformes;Gobiidae;Coryphopterus;urospilus;Coryphopterus urospilus;Gobio/Gobio semáforo;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;3.5;0.00741;3.18
+Myliobatiformes;Dasyatidae;Dasyatis;dipterura;Dasyatis dipterura;Manta coludo o arenera;GdC;;x;;NO;;;;;;x;;NINGUNO;;;;3.5;0.01202;3.03
+Tetraodontiformes;Diodontidae;Diodon;holocanthus;Diodon holocanthus;Pez globo / Pez erizo / mapache ;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;3.9;0.04365;2.87
+Tetraodontiformes;Diodontidae;Diodon;hystrix;Diodon hystrix;Pez erizo picoso;GdC;;x;x;NO;;;;;x;;;NINGUNO;;;;3.7;0.06607;2.84
+Torpediniformes;Narcinidae;Diplobatis;ommata;Diplobatis ommata;Raya eléctrica ;GdC;;x;;NO;;;x;;;;;NINGUNO;;;;3.3;0.01023;2.83
+Anguilliformes;Muraenidae;Echidna ;nebulosa;Echidna nebulosa;Morena estrellada/Morena estriada;GdC;;;x;NO;;;;;;;x;NINGUNO;;;;4;ND;ND
+Perciformes;Gobiidae;Elacatinus ;puncticulatus;Elacatinus puncticulatus;Gobio/Gobio cabeza roja;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;3.5;0.00661;3.12
+Perciformes;Gobiidae;Tigrigobius;limbaughi;Tigrigobius limbaughi;Gobio insólito;GdC;;;;NO;;;;;;;x;NINGUNO;;;;3.1;0.00832;3.2
+Perciformes;Gobiidae;Elacatinus ;puncticulatus;Elacatinus puncticulatus;Gobio;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;3.5;0.00661;3.12
+Perciformes;Carangidae;Elagatis ;bipinnulata;Elagatis bipinnulata;Macarela salmón;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;4.3;0.01072;2.89
+Perciformes;Serranidae;Epinephelus;analogus;Epinephelus analogus;Cabrilla pinta / Cabrilla pinto;GdC;;x;;NO;;;;;x;;;"Jaiba (Especie Asociada); Huachinango y pargos (Especie Asociada);Robalos (Centropomidae)";;;;3.8;ND;ND
+Perciformes;Serranidae;Epinephelus;labriformis;Epinephelus labriformis;Cabrilla piedreda;GdC;;x;;NO;;;;;x;;;Huachinango y pargos (Especie Asociada);;;;4;0.01585;3.05
+Syngnathiformes;Fistulariidae;Fistularia;commersonii;Fistularia commersonii;Pez corneta;GdC;;;x;NO;;;;;;;x;NINGUNO;;;;4.3;0.00282;2.91
+Perciformes;Chaetodontidae;Forcipiger;flavissimus;Forcipiger flavissimus;Mariposa hocicona;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;3.1;ND;ND
+Perciformes;Kyphosidae;Girella;simplicidens;Girella simplicidens;Chopa café / Chopa ojo azul;GdC;;x;;NO;;;;;x;;;NINGUNO;;;x;2.8;0.01549;3.03
+Anguilliformes;Muraenidae;Gymnothorax;castaneus;Gymnothorax castaneus;Morena prieta o verde;GdC;;x;x;NO;;;;;x;;;NINGUNO;;;;4;0.00093;3.1
+Anguilliformes;Muraenidae;Gymnothorax;dovii;Gymnothorax dovii;Morena;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;4.3;0.00093;3.1
+Anguilliformes;Muraenidae;Gymnomuraena;zebra;Gymnomuraena zebra;Morena zebra;GdC;;;x;NO;;;;;;;x;NINGUNO;;;;3.4;0.0112;3.07
+Perciformes;Haemulidae;Haemulon;flaviguttatum;Haemulon flaviguttatum;Rayadillo aleta amarilla / Burro / Ronco de rabo manchado;GdC;;x;;NO;;;;;x;;;Huachinango y pargos (Especie Asociada);;;;4.2;ND;ND
+Perciformes;Haemulidae;Haemulon;maculicauda;Haemulon maculicauda;Rayadillo / Burro roncador rayado;GdC;;x;;NO;;;;;x;;;"Huachinango y pargos (Especie Asociada); Robalo (Centropomidae)(Especie Asociada)";;;;4.2;0.01349;3.04
+Perciformes;Haemulidae;Haemulon ; scudderii;Haemulon scudderii;Burro pecoso/ Ronco prieto;GdC;;;;NO;;;;;x;;;NINGUNO;;;;4.2;0.01479;3.03
+Perciformes;Haemulidae;Haemulon;sexfasciatum;Haemulon sexfasciatum;Burrito / Burro almejero;GdC;;x;x;NO;;;;;x;;;"Huachinango y pargos (Especie Asociada); Robalo (Centropomidae)(Especie Asociada)";;;;4.2;0.0263;3.01
+Perciformes;Haemulidae;Haemulon;steindachneri;Haemulon steindachneri;Burro latino/Ronco chere chere;GdC;;;;NO;;;;;x;;;NINGUNO;;;;3.7;0.0138;3.02
+Perciformes;Labridae;Halichoeres;chierchiae;Halichoeres chierchiae;Vieja herida / Señorita herida;GdC;;x;x;NO;;;;;x;;;NINGUNO;;;;3.5;0.01;3.08
+Perciformes;Labridae;Halichoeres;dispilus;Halichoeres dispilus;Vieja boca amarilla / Señorita cocinera;GdC;;x;x;NO;;;;;x;;;NINGUNO;;;;3.9;0.0038;3.1
+Perciformes;Labridae;Halichoeres;melanotis;Halichoeres melanotis;Señorita dorada;GdC;;;;NO;;;;;x;;;NINGUNO;;;;3.5;0.01;3.08
+Perciformes;Labridae;Halichoeres;nicholsi;Halichoeres nicholsi ;Vieja puntos negros;GdC;;x;x;NO;;;;;x;;;NINGUNO;;;;4;0.01;3.08
+Perciformes;Labridae;Halichoeres;notospilus;Halichoeres notospilus;Vieja turquesa / Señorita listada ;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;3.5;0.01;3.08
+Perciformes;Labridae;Halichoeres;semicinctus;Halichoeres semicinctus;Vieja puntos negros / Señorita roquera;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;3.3;0.01;3.08
+Beloniformes;Hemiramphidae;Hemiramphus ;saltator;Hemiramphus saltator;Pajarito agujeta;GdC;;;;NO;;;;;x;;;NINGUNO;;;;4;0.00234;3.16
+Anguilliformes;Congridae;Heteroconger ;digueti;Heteroconger digueti;Congrio de cortés;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;3.4;0.00102;3.06
+Heterodontiformes;Heterodontidae;Heterodontus;francisci;Heterodontus francisci;Tiburón cornudo;GdC;;x;;NO;;;;;;x;;NINGUNO;;;;3.2;0.00389;3.12
+Perciformes;Pomacanthidae;Holacanthus;clarionensis;Holacanthus clarionensis;Ángel/ Ángel de Clarión;GdC;;;x;SI;;;x;;;;;NINGUNO;;x;;2.6;0.02951;2.89
+Perciformes;Pomacanthidae;Holacanthus;passer;Holacanthus passer;Ángel rey;GdC;;;x;SI;;;;;x;;;NINGUNO;;;x;2.6;0.03162;2.93
+Perciformes;Lutjanidae;Hoplopagrus;guentherii;Hoplopagrus guentherii;Coconaco;GdC;;x;x;NO;;;;;x;;;"Huachinango y pargos (Especie Objetivo); Robalo(Centropomidae)(Especie Asociada)";;;;3.8;ND;ND
+Perciformes;Chaetodontidae;Johnrandallia;nigrirostris;Johnrandallia nigrirostris;Mariposa nariz negra;GdC;;;x;NO;;;;;x;;;NINGUNO;;;x;3;0.02754;3.09
+Perciformes;Kyphosidae;Kyphosus;analogus;Kyphosus analogus;Chopa / Copa gris o rayada ;GdC;;x;;NO;;;;;x;;;Huachinango y pargos (Especie Asociada);;;;2;0.01778;3.01
+Perciformes;Kyphosidae;Kyphosus;elegans;Kyphosus elegans;Chopa de Cortés;GdC;;x;;NO;;;;;x;;;NINGUNO;;;;2.9;0.01778;3.01
+Perciformes;Kyphosidae;Kyphosus;ocyurus;Kyphosus ocyurus;Chopa selema;GdC;;;;NO;;;;;;;x;NINGUNO;;;;3.5;0.0123;3.02
+Perciformes;Labrisomidae;Labrisomus;xanti;Labrisomus xanti;Blenia bocona/Chalapo;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;3.5;0.01;3.07
+Perciformes;Lutjanidae;Lutjanus;argentiventris;Lutjanus argentiventris;Pargo amarillo;GdC;x;x;x;NO;;;;;x;;;"Huachinango y pargos (Especie Objetivo); Ostión (Especie asociada, lutjanus sp.)";;;;4;0.01549;2.97
+Perciformes;Lutjanidae;Lutjanus;novemfasciatus;Lutjanus novemfasciatus;Pargo;GdC;;x;;NO;;;;;x;;;Huachinango y Pargos (Especie Objetivo) ;;;;4.1;0.01862;2.99
+Perciformes;Lutjanidae;Lutjanus;viridis;Lutjanus viridis;Pargo rayado;GdC;;x;;NO;;;;;x;;;Huachinango y Pargos (Especie Objetivo) ;;;;4.2;0.01413;2.98
+Perciformes;Gobiidae;Lythrypnus;dalli;Lythrypnus dalli;Gobio/ Gobio bonito;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;3.2;0.00851;3.05
+Perciformes;Labrisomidae;Malacoctenus;ebisui;Malacoctenus ebisui;Blenia/Tirambollo dorado;GdC;;;;NO;;;;;x;;;NINGUNO;;;;3.5;0.00933;3.03
+Perciformes;Labrisomidae;Malacoctenus;margaritae;Malacoctenus margaritae;Blenia margarita/ Trambollo margarita;GdC;;;;NO;;;;;x;;;NINGUNO;;;;3.5;0.00933;3.03
+Myliobatiformes;Myliobatidae;Manta ;birostris;Manta birostris;Mantaraya/ Manta gigante;GdC;;x;;NO;;;x;;;;;NINGUNO;;;;3.5;ND;ND
+Tetraodontiformes;Balistidae;Melichthys ;niger;Melichthys niger;Cochito negro/Puerco negro;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;2.4;0.02344;2.96
+Perciformes;Haemulidae;Microlepidotus;inornatus ;Microlepidotus inornatus;Ronco rayadillo;GdC;;x;;NO;;;;;x;;;Huachinango y pargos (Especie Asociada);;;;3.6;0.01122;2.94
+Perciformes;Pomacentridae;Microspathodon ; bairdii;Microspathodon bairdii;Jaqueta vistosa;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;2.5;0.02138;2.99
+Perciformes;Pomacentridae;Microspathodon ;dorsalis;Microspathodon dorsalis;Jaqueta gigante;GdC;;x;x;NO;;;;;x;;;NINGUNO;;;;2.1;0.02138;2.99
+Mugiliformes;Mugilidae;Mugil ;curema;Mugil curema;Lisa blanca/Lisa;GdC;;x;;NO;;;;;x;;;Lisas (Mugilidae)(Especie Objetivo);;;;2;0.01202;2.95
+Perciformes;Mullidae;Mulloidichthys;dentatus;Mulloidichthys dentatus;Chivo amarillo/ Chivo barbón/Chivo rayado;GdC;;x;x;NO;;;;;x;;;Lisas (Mugilidae)(Especie Asociada);;;;3.7;0.00955;3.11
+Anguilliformes;Muraenidae;Muraena;lentiginosa;Muraena lentiginosa;Morena pinta;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;3.9;0.00112;3.07
+Perciformes;Serranidae;Mycteroperca;jordani;Mycteroperca jordani;Baya;GdC;x;x;;NO;;x;;;;;;Huachinango y pargos (Especie Asociada);;;;4.5;ND;ND
+Perciformes;Serranidae;Mycteroperca;prionura;Mycteroperca prionura;Cabrilla chiruda / Garropa aserrada / Cabrilla pinta;GdC;x;x;;NO;;;;x;;;;NINGUNO;;;;4.4;ND;ND
+Perciformes;Serranidae;Mycteroperca;rosacea;Mycteroperca rosacea;Cabrilla sardinera;GdC;x;x;x;NO;;;x;;;;;Huachinango y pargos (Especie Asociada);;;;4.5;ND;ND
+Myliobatiformes;Myliobatidae;Myliobatis;californica;Myliobatis californica;Raya gavilán/Raya muerciélago/Tecolote;GdC;;x;;NO;;;;;x;;;NINGUNO;;;;3.2;0.00389;3.09
+Beryciformes;Holocentridae;Myripristis;leiognathus ;Myripristis leiognathus;Soldado panámico;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;3.1;0.01622;3.19
+Torpediniformes;Narcinidae;Narcine;entemedor;Narcine entemedor ;Raya eléctrica gigante;GdC;;x;;NO;;;;;;x;;NINGUNO;;;;3;0.01023;2.83
+Perciformes;Scaridae;Nicholsina;denticulata;Nicholsina denticulata;Perico baboso;GdC;;x;;NO;;;;;x;;;NINGUNO;;;;2;0.01047;3.08
+Perciformes;Blenniidae;Ophioblennius;steindachneri;Ophioblennius steindachneri;Borracho mono;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;2.7;0.00977;2.99
+Perciformes;Opistognathidae;Opistognathus;mexicanus;Opistognathus mexicanus;Bocón mexicano;GdC;;;;NO;;;;;;;x;NINGUNO;;;;3.5;0.00389;3.12
+Perciformes;Opistognathidae;Opistognathus;punctatus;Opistognathus punctatus;Boca grande/Bocón punteado;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;3.8;ND;ND
+Perciformes;Opistognathidae;Opistognathus;rosenblatti;Opistognathus rosenblatti;Bocón azul/Bocón manchas azules;GdC;;;x;SI;;;;;x;;;NINGUNO;;x;;3.5;0.00389;3.12
+Tetraodontiformes;Ostraciidae;Ostracion;meleagris;Ostracion meleagris;Cofre manchado/Cofre moteado;GdC;;;x;NO;;;;;;;x;NINGUNO;;;;2.7;0.03631;2.81
+Perciformes;Cirrhitidae;Oxycirrhites;typus;Oxycirrhites typus;Halcón narigón ;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;3.3;0.00389;3.12
+Perciformes;Serranidae;Paralabrax;auroguttatus;Paralabrax auroguttatus;Extranjero;GdC;;x;;NO;;;;;;x;;Huachinango y pargos (Especie Asociada);;;;4.2;ND;ND
+Perciformes;Serranidae;Paralabrax;maculatofasciatus;Paralabrax maculatofasciatus;Cabrilla arenera;GdC;;x;;NO;;;;;x;;;"Jaiba (Especie Asociada); Huachinango y pargos (Especie Asociada)";;;;4.2;0.01585;3.08
+Perciformes;Serranidae;Paranthias;colonus;Paranthias colonus;Sandía;GdC;;x;x;NO;;;;;x;;;NINGUNO;;;;3.8;0.01122;3.05
+Perciformes;Sciaenidae;Pareques;fuscovittatus;Pareques fuscovittatus;Payasito lindo;GdC;;x;x;NO;;;;;x;;;NINGUNO;;;;3.4;0.00331;3.18
+Perciformes;Blenniidae;Plagiotremus;azaleus ;Plagiotremus azaleus;Blenia/Diente sable;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;4.4;0.00537;3.05
+Perciformes;Pomacentridae;Pomacanthus;zonipectus;Pomacanthus zonipectus;Ángel de Cortés;GdC;;;x;SI;;;;;x;;;NINGUNO;;;;3.1;0.0309;2.9
+Perciformes;Acanthuridae;Prionurus ;laticlavius;Prionurus laticlavius;Cirujano barbero/Cochinito barbero;GdC;;;;NO;;;;;x;;;NINGUNO;;;;2.7;0.01995;3.01
+Perciformes;Acanthuridae;Prionurus ;punctatus;Prionurus punctatus;cirujanom cochinito/ cochinito;GdC;;;x;NO;;;;;x;;;NINGUNO;;;x;2;0.01995;3.01
+Tetraodontiformes;Balistidae;Pseudobaliste;naufragium ;Pseudobalistes naufragium;Cochito bota/Puerco de piedra;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;3.4;0.02344;2.96
+Myliobatiformes;Myliobatidae;Rhinoptera;steindachneri ;Rhinoptera steindachneri;Gavilán Dorado/Gavilán negro;GdC;;x;;NO;;;;x;;;;Huachinango y pargos (Especie Asociada);;;;3.6;0.01;3.04
+Perciformes;Serranidae;Rypticus ;bicolor;Rypticus bicolor;Pez jabón/ Jabonero moteado;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;4;0.01698;3.01
+Rajiformes;Rhinobatidae;Rhinobatos;productus;Rhinobatos productus;Guitarra viola;GdC;;x;;NO;;;;x;;;;NINGUNO;;;;3.6;ND;ND
+Perciformes;Serranidae;Rypticus ;nigripinnis ;Rypticus nigripinnis;Jabonero negrillo;GdC;;;;NO;;;;;x;;;NINGUNO;;;;3.8;0.01698;3.01
+Beryciformes;Holocentridae;Sargocentron;suborbitale ;Sargocentron suborbitale;Candil sol;GdC;;;;NO;;;;;;;x;NINGUNO;;;;3.5;0.01514;2.98
+Perciformes;Scaridae;Scarus;compressus;Scarus compressus;Loro;GdC;;;x;NO;;;;;x;;;NINGUNO;;;x;2;0.01413;3.04
+Perciformes;Scaridae;Scarus;ghobban;Scarus ghobban;Loro;GdC;;x;;NO;;;;;x;;;NINGUNO;;;x;2;0.01259;3.01
+Perciformes;Scaridae;Scarus;perrico;Scarus perrico;Loro jorobado;GdC;;x;;NO;;;;;x;;;NINGUNO;;;x;2;0.00389;3.12
+Perciformes;Scaridae;Scarus ;rubroviolaceus ;Scarus rubroviolaceus;Loro bicolor;GdC;;;x;NO;;;;;x;;;NINGUNO;;;x;2;0.01288;3.04
+Perciformes;Scombridae;Scomberomorus;sierra ;Scomberomorus sierra;Sierra / Sierra del Pacífico;GdC;;x;;NO;;;;;x;;;Sierras (Scombridae)(Especie Objetivo);;;;4.5;0.00646;2.99
+Scorpaeniformes;Scorpaenidae;Scorpaena;mystes;Scorpaena mystes;Lupón / Pes escorpión ;GdC;;x;x;NO;;;;;x;;;"Jaiba (Especie Asociada); Huachinango y pargos (Especie Asociada)";;;;3.9;0.01318;3.02
+Anguilliformes;Muraenidae;Scuticaria;tigrina;Scuticaria tigrina;Morena atigrada/ Morena atigrada de arrecifes;GdC;;;;NO;;;;;;;x;NINGUNO;;;;3.8;0.00102;3.06
+Perciformes;Labridae;Semicossyphus;pulcher;Semicossyphus pulcher;Vieja californiana;GdC;;x;;NO;;;x;;;;;Rocotes (Especies asociadas);;;;3.6;ND;ND
+Perciformes;Carangidae;Seriola;lalandi;Seriola lalandi;Jurel aleta amarilla;GdC;x;x;;NO;;;;;x;;;Sierras (Scombridae)(Especie Asociada);;;;4.2;0.01778;2.94
+Perciformes;Carangidae;Seriola ;rivoliana ;Seriola rivoliana;Medregal limón/ Pez fuerte;GdC;;;x;NO;;;;;x;;;Sierras (Scombridae)(Especie Asociada);;;;4.5;0.01862;2.98
+Perciformes;Serranidae;Serranus;psittacinus;Serranus psittacinus;Cabrilla falsa / Serrano rayado;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;3.5;0.01072;3.06
+Tetraodontiformes;Tetraodontidae;Sphoeroides;annulatus;Sphoeroides annulatus;Botete diana;GdC;;x;x;NO;;;;;x;;;"Jaiba (Especie Asociada); Huachinango y pargos (Especie Asociada); Lisas (Mugilidae)(Especie Asociada)";;;;3.1;0.02692;2.85
+Tetraodontiformes;Tetraodontidae;Sphoeroides;lobatus;Sphoeroides lobatus;Botete verrugoso / Botete peruano/tamborín;GdC;;x;;NO;;;;;x;;;NINGUNO;;;;3.5;0.0263;2.85
+Perciformes;Pomacentridae;Stegastes;acapulcoensis;Stegastes acapulcoensis;Damisela acapulqueña;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;2;0.01995;2.99
+Perciformes;Pomacentridae;Stegastes;flavilatus;Stegastes flavilatus;Jaqueta de dos colores;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;2;0.01995;2.99
+Perciformes;Pomacentridae;Stegastes;leucorus ;Stegastes leucorus;Jaqueta rabo blanco;GdC;;;x;NO;;;x;;;;;NINGUNO;;;;ND;0.01995;2.99
+Perciformes;Pomacentridae;Stegastes;rectifraenum;Stegastes rectifraenum;Damisela / Damisela de Cortés;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;2;0.01549;2.97
+Tetraodontiformes;Balistidae;Sufflamen;verres;Sufflamen verres;Cochito naranja;GdC;;x;x;NO;;;;;x;;;Huachinango y pargos (Especie Asociada);;;;3.3;0.02344;2.96
+Aulopiformes;Synodontidae;Synodus;lacertinus;Synodus lacertinus;Lagarto chile/Chile lagarto;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;4.2;0.0038;3.2
+Perciformes;Labridae;Thalassoma;grammaticum;Thalassoma grammaticum;Señorita crepúsculo/Vieja crepúsculo;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;3.5;0.00933;3.04
+Perciformes;Labridae;Thalassoma;lucasanum;Thalassoma lucasanum;Viejita arcoiris;GdC;;;x;NO;;;;;x;;;NINGUNO;;;;3.5;0.00813;2.99
+Perciformes;Carangidae;Trachinotus ;rhodopus;Trachinotus rhodopus;Pámpano;GdC;;x;;NO;;;;;x;;;"Sierras (Scombridae)(Especie Asociada); Huachinango y pargos (Especie Asociada); Robalos (Centropomidae)(Especie Asociada)";;;;4;ND;ND
+Myliobatiformes;Urotrygonidae;Urobatis;concentricus;Urobatis concentricus;Manta redonda;GdC;;x;;NO;;;;;;x;;Jaiba (Especie Asociada);;;;3.3;0.00708;3.06
+Perciformes;Zanclidae;Zanclus ;cornutus;Zanclus cornutus;Ídolo moro;GdC;;;x;NO;;;;;;;x;NINGUNO;;;;2.5;0.01738;3.06
