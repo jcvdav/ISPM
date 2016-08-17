@@ -1,6 +1,10 @@
 ---
 title: "ISPM"
-output: pdf_document
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    toc: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -15,44 +19,52 @@ suppressPackageStartupMessages({
   library(tidyr)
   library(MPAtools)
   library(reshape)
+  library(stargazer)
+  library(ggExtra)
 })
 
 ```
 
 ```{r}
 
-abnt <- read.csv("./Datos/12082016 ISPM Especifico.csv", sep = ";", stringsAsFactors = F) %>%
-  mutate(NT = as.numeric(NT), a = as.numeric(a), b=as.numeric(b))
+# abnt <- read.csv("./Datos/12082016 ISPM Especifico.csv", sep = ";", stringsAsFactors = F) %>%
+#   mutate(NT = as.numeric(NT), a = as.numeric(a), b=as.numeric(b))
+# 
+# datos <- read.csv("./Datos/peces_completado.csv", sep=";")%>%
+#   filter (!GeneroEspecie == "Urobatis spp.") %>%
+#   mutate(id = paste(Dia, Mes, Ano, Sitio, Transecto))
+# 
+# datos2 <- datos %>%
+#   select(id, Genero, Especie, GeneroEspecie, Talla, Abundancia) %>%
+#   complete(id, nesting(Genero, Especie, GeneroEspecie), fill = list(Talla = NA, Abundancia = 0))
+# 
+# datos <- datos %>%
+#   select(-GeneroEspecie, -Talla, -Abundancia, -Genero, -Especie) %>%
+#   group_by(id, Dia, Mes, Ano, Estado, Comunidad, Sitio, Latitud, Longitud, Habitat, Zonificacion, TipoProteccion, ANP, BuzoMonitor, HoraInicial, HoraFinal, ProfundidadInicial, ProfundidadFinal, Temperatura, Visibilidad, Corriente, Transecto) %>%
+#   summarize(N=n()) %>%
+#   select(-N) %>%
+#   full_join(datos2, by ="id") %>%
+#   left_join(abnt, by = "GeneroEspecie") %>%
+#   mutate(Talla = as.numeric(as.character(Talla)), Abundancia = as.numeric(as.character(Abundancia))) %>%
+#   mutate(Biomasa = Abundancia*a*(Talla^b)) %>%
+#   mutate(TransectNumber = Transecto, Site = Comunidad, Year = Ano, Zone = Zonificacion, SizeClass = Talla) %>%
+#   filter(!is.na(Abundancia)) %>%
+#   ungroup()
 
-datos <- read.csv("./Datos/peces_completado.csv", sep=";")%>%
-  mutate(id = paste(Dia, Mes, Ano, Sitio, Transecto))
-
-datos2 <- datos %>%
-  select(id, Genero, Especie, GeneroEspecie, Talla, Abundancia) %>%
-  complete(id, nesting(Genero, Especie, GeneroEspecie), fill = list(Talla = NA, Abundancia = 0))
-
-datos <- datos %>%
-  select(-GeneroEspecie, -Talla, -Abundancia, -Genero, -Especie) %>%
-  group_by(id, Dia, Mes, Ano, Estado, Comunidad, Sitio, Latitud, Longitud, Habitat, Zonificacion, TipoProteccion, ANP, BuzoMonitor, HoraInicial, HoraFinal, ProfundidadInicial, ProfundidadFinal, Temperatura, Visibilidad, Corriente, Transecto) %>%
-  summarize(N=n()) %>%
-  select(-N) %>%
-  full_join(datos2, by ="id") %>%
-  left_join(abnt, by = "GeneroEspecie") %>%
-  mutate(Talla = as.numeric(as.character(Talla)), Abundancia = as.numeric(as.character(Abundancia))) %>%
-  mutate(Biomasa = Abundancia*a*(Talla^b)) %>%
-  mutate(TransectNumber = Transecto, Site = Comunidad, Year = Ano, Zone = Zonificacion, SizeClass = Talla) %>%
-  filter(!is.na(Abundancia))
+datos <- read.csv("./Datos/limpios/pecesISPM_JCVD16082016.csv", sep=",")
 
 ```
 
-# Peces (Pesca vs. No Pesca)
+# Indicadores Peces (Pesca vs. No Pesca)
 
 ## Densidad promedio por zona
 
 ```{r}
 
+# Gráfica de densidad promedio
+
 N <- datos %>%
-  group_by(Ano, Zonificacion, Transecto) %>%
+  group_by(Ano, Zonificacion, Sitio, Transecto) %>%
   summarize(N1=sum(Abundancia)) %>%
   group_by(Ano, Zonificacion) %>%
   summarize(N = mean(N1), NDS = sd(N1))
@@ -63,18 +75,35 @@ ggplot(data = N, aes(x = Ano, y = N, col = Zonificacion))+
   geom_errorbar(aes(ymin=N-NDS,ymax=N+NDS), width = 0.2)+
   theme_bw()+
   labs(x="Año", y="Densidad (org / transecto)")+
-  scale_color_brewer(palette = "Set1")
+  scale_color_brewer(palette = "Set1")+
+  removeGrid()
 
 ```
+
+```{r, results='asis'}
+
+#Regresión lineal para densidades
+
+NP <- subset(N, Zonificacion == "Zona de Pesca ")
+modelNP <- lm(N~Ano, data = NP)
+
+NR <- subset(N, Zonificacion == "Zona de no Pesca ")
+modelNR <- lm(N~Ano, data = NR)
+
+stargazer(modelNP, modelNR, type = "latex", dep.var.caption = "Densidad", omit.stat = "rsq", title = "Modelos lineales describiendo cambios en las densidades promedio por zona para (1) Pesca y (2) No Pesca.")
+
+```
+
 
 ## Riqueza promedio por zona
 
 ```{r}
 
 S <- datos %>%
-  group_by(Ano, Zonificacion, Transecto, GeneroEspecie) %>%
+  filter(Abundancia > 0) %>%
+  group_by(Ano, Zonificacion, Sitio, Transecto, GeneroEspecie) %>%
   summarize(S1 = n()) %>%
-  group_by(Ano, Zonificacion, Transecto) %>%
+  group_by(Ano, Zonificacion, Sitio, Transecto) %>%
   summarize(S1 = n()) %>%
   group_by(Ano, Zonificacion) %>%
   summarize(S = mean(S1), SDS = sd(S1))
@@ -94,8 +123,8 @@ ggplot(data = S, aes(x = Ano, y = S, col = Zonificacion))+
 ```{r}
 
 B <- datos %>%
-  group_by(Ano, Zonificacion, Transecto) %>%
-  summarize(B1 = sum(Biomasa)) %>%
+  group_by(Ano, Zonificacion, Sitio, Transecto) %>%
+  summarize(B1 = sum(Biomasa, na.rm=T)) %>%
   group_by(Ano, Zonificacion) %>%
   summarize(B = mean(B1, na.rm=T), BDS = sd(B1, na.rm=T))
 
@@ -114,43 +143,77 @@ ggplot(data = B, aes(x = Ano, y = B, col = Zonificacion))+
 ```{r}
 
 NT <- datos %>%
-  group_by(Ano, Zonificacion, Transecto) %>%
-  summarize(NT1 = mean(NT, na.rm=T)) %>%
   group_by(Ano, Zonificacion) %>%
-  summarize(NT = mean(NT1, na.rm=T), NTS = sd(NT1, na.rm=T))
+  summarize(NT1 = mean(NT, na.rm=T), NTS = sd(NT, na.rm=T))
 
-ggplot(data = NT, aes(x = Ano, y = NT, col = Zonificacion))+
+ggplot(data = NT, aes(x = Ano, y = NT1, col = Zonificacion))+
   geom_line()+
   geom_point() +
-  geom_errorbar(aes(ymin=NT-NTS,ymax=NT+NTS), width = 0.2)+
+  geom_errorbar(aes(ymin=NT1-NTS,ymax=NT1+NTS), width = 0.2)+
   theme_bw()+
   labs(x="Año", y="Nivel trófico medio")+
   scale_color_brewer(palette = "Set1")
 
 ```
 
+## NT peces
+
+```{r}
+
+NT_P <- datos %>%
+  filter(Zonificacion == "Zona de Pesca ") %>%
+  filter(!is.na(NT)) %>%
+  mutate(NT = floor(NT)) %>%
+  group_by(Ano, NT) %>%
+  summarize(Abundancia = mean(Abundancia)) %>%
+  ungroup() %>%
+  select(Ano, NT, Abundancia) %>%
+  spread(Ano, Abundancia)
+
+rows <- unique(NT_P$NT)
+
+NT_P <- as.data.frame(NT_P[-1])
+
+rownames(NT_P) <- rows
+
+pro.NT_P<- prop.table(as.matrix(NT_P),2)
+
+Xsq <- chisq.test(pro.NT_P, correct = T)
+
+
+Pr <- prcomp(t(NT_P), scale =T)
+biplot(Pr)
+```
+
+
 \clearpage
 
 # Invertebrados
 
-```{r}
+```{r, eval=F}
 
-datos_inv <- read.csv("./Datos/invertebrados_completado.csv", sep=",")%>%
-  mutate(id = paste(Dia, Mes, Ano, Sitio, Transecto))
+# datos_inv <- read.csv("./Datos/invertebrados_completado.csv", sep=",")%>%
+#   mutate(id = paste(Dia, Mes, Ano, Sitio, Transecto))
+# 
+# datos_inv2 <- datos_inv %>%
+#   select(id, Genero, Especie, GeneroEspecie, Abundancia) %>%
+#   complete(id, nesting(Genero, Especie, GeneroEspecie), fill = list(Abundancia = 0))
+# 
+# datos_inv <- datos_inv %>%
+#   select(-GeneroEspecie, -Abundancia, -Genero, -Especie) %>%
+#   group_by(id, Dia, Mes, Ano, Estado, Comunidad, Sitio, Latitud, Longitud, Habitat, Zonificacion, TipoProteccion, ANP, BuzoMonitor, HoraInicial, HoraFinal, ProfundidadInicial, ProfundidadFinal, Temperatura, Visibilidad, Corriente, Transecto) %>%
+#   summarize(N=n()) %>%
+#   select(-N) %>%
+#   full_join(datos_inv2, by ="id") %>%
+#   filter(!is.na(Abundancia)) %>%
+#   group_by(id, Dia, Mes, Ano, Estado, Comunidad, Sitio, Latitud, Longitud, Habitat, Zonificacion, TipoProteccion, ANP, BuzoMonitor, HoraInicial, HoraFinal, ProfundidadInicial, ProfundidadFinal, Temperatura, Visibilidad, Corriente, Transecto, Genero, Especie, GeneroEspecie) %>%
+#   summarize(Abundancia = sum(Abundancia))
 
-datos_inv2 <- datos_inv %>%
-  select(id, Genero, Especie, GeneroEspecie, Abundancia) %>%
-  complete(id, nesting(Genero, Especie, GeneroEspecie), fill = list(Abundancia = 0))
-
-datos_inv <- datos_inv %>%
-  select(-GeneroEspecie, -Abundancia, -Genero, -Especie) %>%
-  group_by(id, Dia, Mes, Ano, Estado, Comunidad, Sitio, Latitud, Longitud, Habitat, Zonificacion, TipoProteccion, ANP, BuzoMonitor, HoraInicial, HoraFinal, ProfundidadInicial, ProfundidadFinal, Temperatura, Visibilidad, Corriente, Transecto) %>%
-  summarize(N=n()) %>%
-  select(-N) %>%
-  full_join(datos_inv2, by ="id") %>%
-  filter(!is.na(Abundancia)) %>%
-  group_by(id, Dia, Mes, Ano, Estado, Comunidad, Sitio, Latitud, Longitud, Habitat, Zonificacion, TipoProteccion, ANP, BuzoMonitor, HoraInicial, HoraFinal, ProfundidadInicial, ProfundidadFinal, Temperatura, Visibilidad, Corriente, Transecto, Genero, Especie, GeneroEspecie) %>%
-  summarize(Abundancia = sum(Abundancia))
+invert <- read.csv("~/GitHub/ISPM/Datos/limpios/invertebradosISPM_JCVD16082016.csv")
 
 ```
+
+
+
+
 
