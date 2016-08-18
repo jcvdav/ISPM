@@ -2,6 +2,7 @@
 title: "ISPM"
 output:
   pdf_document:
+    fig_caption: yes
     toc: yes
   html_document:
     toc: yes
@@ -11,7 +12,7 @@ output:
 knitr::opts_chunk$set(echo = F, fig.height = 3, warning = F)
 ```
 
-```{r}
+```{r cargar paquetes}
 
 suppressPackageStartupMessages({
   library(ggplot2)
@@ -25,7 +26,7 @@ suppressPackageStartupMessages({
 
 ```
 
-```{r}
+```{r cargar datos}
 
 # abnt <- read.csv("./Datos/12082016 ISPM Especifico.csv", sep = ";", stringsAsFactors = F) %>%
 #   mutate(NT = as.numeric(NT), a = as.numeric(a), b=as.numeric(b))
@@ -51,7 +52,10 @@ suppressPackageStartupMessages({
 #   filter(!is.na(Abundancia)) %>%
 #   ungroup()
 
-datos <- read.csv("./Datos/limpios/pecesISPM_JCVD16082016.csv", sep=",")
+datos <- read.csv("./Datos/limpios/pecesISPM_JCVD16082016.csv", sep=";") %>%
+  filter(!GeneroEspecie == "Urobatis sp.") %>%
+  filter(!GeneroEspecie == "Kiphosus sp.") %>%
+  filter(!GeneroEspecie == "Muraena sp.")
 
 ```
 
@@ -61,62 +65,65 @@ datos <- read.csv("./Datos/limpios/pecesISPM_JCVD16082016.csv", sep=",")
 
 ```{r}
 
-# Gráfica de densidad promedio
+N <- density(datos, "Bahia de Kino")
+mpa_plot2(N, "d")
 
-N <- datos %>%
-  group_by(Ano, Zonificacion, Sitio, Transecto) %>%
-  summarize(N1=sum(Abundancia)) %>%
+```
+
+```{r}
+
+NP <- N %>%
   group_by(Ano, Zonificacion) %>%
-  summarize(N = mean(N1), NDS = sd(N1))
+  summarize(N = mean (D)) %>%
+  filter(Zonificacion == "Zona de Pesca ")
+modelNP <- lm(N ~ Ano, data = NP)
 
-ggplot(data = N, aes(x = Ano, y = N, col = Zonificacion))+
-  geom_line()+
-  geom_point()+
-  geom_errorbar(aes(ymin=N-NDS,ymax=N+NDS), width = 0.2)+
-  theme_bw()+
-  labs(x="Año", y="Densidad (org / transecto)")+
-  scale_color_brewer(palette = "Set1")+
-  removeGrid()
+NR <- N %>%
+  group_by(Ano, Zonificacion) %>%
+  summarize(N = mean (D)) %>%
+  filter(Zonificacion == "Zona de no Pesca ")
+modelNR <- lm(N ~ Ano, data = NR)
 
-```
+N2 <- datos %>%
+  mutate(Temperatura = as.numeric(as.character(Temperatura))) %>%
+  group_by(Ano, Zonificacion, Sitio, Transecto) %>%
+  summarize(N = sum(Abundancia, na.rm=T), Temp = mean(Temperatura, na.rm = T)) %>%
+  group_by(Ano, Zonificacion) %>%
+  summarize(N = mean(N, na.rm=T), Temp = mean(Temp, na.rm=T))
 
-```{r, results='asis'}
+modelNT <- lm(N ~ Ano + Zonificacion + Temp, data = N2)
 
-#Regresión lineal para densidades
-
-NP <- subset(N, Zonificacion == "Zona de Pesca ")
-modelNP <- lm(N~Ano, data = NP)
-
-NR <- subset(N, Zonificacion == "Zona de no Pesca ")
-modelNR <- lm(N~Ano, data = NR)
-
-stargazer(modelNP, modelNR, type = "latex", dep.var.caption = "Densidad", omit.stat = "rsq", title = "Modelos lineales describiendo cambios en las densidades promedio por zona para (1) Pesca y (2) No Pesca.")
+stargazer(modelNP, modelNR, modelNT, type = "latex", dep.var.caption = "Densidad", omit.stat = c("n"), keep.stat = "aic", title = "Modelos lineales describiendo cambios en las densidades promedio por zona para (1) Pesca y (2) No Pesca.")
 
 ```
+
 
 
 ## Riqueza promedio por zona
 
 ```{r}
 
-S <- datos %>%
-  filter(Abundancia > 0) %>%
-  group_by(Ano, Zonificacion, Sitio, Transecto, GeneroEspecie) %>%
-  summarize(S1 = n()) %>%
-  group_by(Ano, Zonificacion, Sitio, Transecto) %>%
-  summarize(S1 = n()) %>%
-  group_by(Ano, Zonificacion) %>%
-  summarize(S = mean(S1), SDS = sd(S1))
-
-ggplot(data = S, aes(x = Ano, y = S, col = Zonificacion))+
-  geom_line()+
-  geom_point()+
-  geom_errorbar(aes(ymin=S-SDS,ymax=S+SDS), width = 0.2)+
-  theme_bw()+
-  labs(x="Año", y="Riqueza (especies / transecto)")+
-  scale_color_brewer(palette = "Set1")
+S <- richness(data = datos, location = "Bahia de Kino")
+mpa_plot2(S, "s")
 
 ```
+
+```{r}
+
+ SP <- S %>%
+  group_by(Ano, Zonificacion) %>%
+  summarize(S = mean(S)) %>%
+  filter(Zonificacion == "Zona de Pesca ")
+modelSP <- lm(S ~ Ano, data = SP)
+
+ SR <- S%>%
+  group_by(Ano, Zonificacion) %>%
+  summarize(S = mean(S)) %>%
+  filter(Zonificacion == "Zona de no Pesca ")
+modelSR <- lm(S ~ Ano, data = SP)
+
+```
+
 
 ## Biomasa promedio por zona
 
@@ -166,9 +173,8 @@ NT_P <- datos %>%
   mutate(NT = floor(NT)) %>%
   group_by(Ano, NT) %>%
   summarize(Abundancia = mean(Abundancia)) %>%
-  ungroup() %>%
-  select(Ano, NT, Abundancia) %>%
   spread(Ano, Abundancia)
+
 
 rows <- unique(NT_P$NT)
 
@@ -180,9 +186,6 @@ pro.NT_P<- prop.table(as.matrix(NT_P),2)
 
 Xsq <- chisq.test(pro.NT_P, correct = T)
 
-
-Pr <- prcomp(t(NT_P), scale =T)
-biplot(Pr)
 ```
 
 
@@ -212,8 +215,6 @@ biplot(Pr)
 invert <- read.csv("~/GitHub/ISPM/Datos/limpios/invertebradosISPM_JCVD16082016.csv")
 
 ```
-
-
 
 
 
