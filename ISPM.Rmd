@@ -362,15 +362,57 @@ stargazer(modelSP, modelSR, type = "latex", dep.var.caption = "Riqueza", omit.st
 
 ```
 
-
+\clearpage
 
 # Especies objetivo de RBISPM
 
 ```{r}
 
-SpObj <- datos %>%
-  filter(GeneroEspecie == "Mycteroperca jordani" |
-           GeneroEspecie == "Mycteroperca prionura")
+load("peces_objetivo.RData")
+
+peces_objetivo <- filter(peces_objetivo, !is.na(Zonificacion)) %>%
+  mutate(W = Abundancia*a*(Talla^b)/1000)
+
+peces_objetivo$W[is.na(peces_objetivo$W)] <- 0
+
+```
+
+## Densidades
+
+```{r, fig.height=10, fig.width = 7}
+
+N <- peces_objetivo %>%
+  group_by(Ano, Zonificacion, GeneroEspecie) %>%
+  summarize(D = mean(Abundancia), DSD = sd(Abundancia))
+
+windows()
+ggplot(data = N, aes(x = Ano, y = D, color = Zonificacion))+
+  geom_point()+
+  geom_line()+
+  geom_errorbar(aes(ymin = D-DSD, ymax = D+DSD))+
+  facet_wrap(~GeneroEspecie, ncol = 2, scales = "free_y")+
+  theme_bw()+
+  scale_color_brewer(palette = "Set1")
+
+```
+
+\clearpage
+
+## Biomasa
+
+```{r, fig.height=10, fig.width = 7}
+
+B <- peces_objetivo %>%
+  group_by(Ano, Zonificacion, GeneroEspecie) %>%
+  summarize(B = mean(W, na.rm=T), BSD = sd(W, na.rm = T))
+
+ggplot(data = B, aes(x = Ano, y = B, color = Zonificacion))+
+  geom_point()+
+  geom_line()+
+  geom_errorbar(aes(ymin = B-BSD, ymax = B+BSD))+
+  facet_wrap(~GeneroEspecie, ncol = 2, scales = "free_y")+
+  theme_bw()+
+  scale_color_brewer(palette = "Set1")
 
 ```
 
@@ -386,3 +428,4 @@ SpObj <- datos %>%
 ## Hoplopagrus guntherii
 
 ## Scarus ghobban
+
