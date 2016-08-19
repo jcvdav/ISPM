@@ -9,7 +9,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = F, fig.height = 3, warning = F)
+knitr::opts_chunk$set(echo = F, fig.height = 3, warning = F, message = F)
 ```
 
 ```{r cargar paquetes}
@@ -52,12 +52,19 @@ suppressPackageStartupMessages({
 #   filter(!is.na(Abundancia)) %>%
 #   ungroup()
 
-datos <- read.csv("./Datos/limpios/pecesISPM_JCVD16082016.csv", sep=";") %>%
-  filter(!GeneroEspecie == "Urobatis sp.") %>%
-  filter(!GeneroEspecie == "Kiphosus sp.") %>%
-  filter(!GeneroEspecie == "Muraena sp.")
+# datos <- read.csv("./Datos/limpios/pecesISPM_JCVD16082016.csv", sep=";") %>%
+#   filter(!GeneroEspecie == "Urobatis sp.") %>%
+#   filter(!GeneroEspecie == "Kiphosus sp.") %>%
+#   filter(!GeneroEspecie == "Muraena sp.")
+
+load("Peces.Rdata")
+
+datos <- datos %>%
+  mutate(TL = NT)
 
 ```
+
+\clearpage
 
 # Indicadores Peces (Pesca vs. No Pesca)
 
@@ -70,7 +77,7 @@ mpa_plot2(N, "d")
 
 ```
 
-```{r}
+```{r, results = 'asis'}
 
 NP <- N %>%
   group_by(Ano, Zonificacion) %>%
@@ -93,11 +100,9 @@ N2 <- datos %>%
 
 modelNT <- lm(N ~ Ano + Zonificacion + Temp, data = N2)
 
-stargazer(modelNP, modelNR, modelNT, type = "latex", dep.var.caption = "Densidad", omit.stat = c("n"), keep.stat = "aic", title = "Modelos lineales describiendo cambios en las densidades promedio por zona para (1) Pesca y (2) No Pesca.")
+stargazer(modelNP, modelNR, modelNT, type = "latex", dep.var.caption = "Densidad", omit.stat = c("n"), title = "Modelos lineales describiendo cambios en las densidades promedio por zona.", column.labels = c("Pesca", "Reserva"), covariate.labels = c("Año", "Zonificacion", "Temperatura"), report = "vct*", single.row = TRUE)
 
 ```
-
-
 
 ## Riqueza promedio por zona
 
@@ -108,7 +113,7 @@ mpa_plot2(S, "s")
 
 ```
 
-```{r}
+```{r, results = 'asis'}
 
  SP <- S %>%
   group_by(Ano, Zonificacion) %>%
@@ -122,6 +127,9 @@ modelSP <- lm(S ~ Ano, data = SP)
   filter(Zonificacion == "Zona de no Pesca ")
 modelSR <- lm(S ~ Ano, data = SP)
 
+
+stargazer(modelSP, modelSR, type = "latex", dep.var.caption = "Densidad", omit.stat = c("n"), title = "Modelos lineales describiendo cambios en las densidades promedio por zona.", column.labels = c("Pesca", "Reserva"), covariate.labels = "Año", report = "vct*", single.row = TRUE)
+
 ```
 
 
@@ -129,19 +137,26 @@ modelSR <- lm(S ~ Ano, data = SP)
 
 ```{r}
 
-B <- datos %>%
-  group_by(Ano, Zonificacion, Sitio, Transecto) %>%
-  summarize(B1 = sum(Biomasa, na.rm=T)) %>%
-  group_by(Ano, Zonificacion) %>%
-  summarize(B = mean(B1, na.rm=T), BDS = sd(B1, na.rm=T))
+B <- fish_biomass(data = datos, location = "Bahia de Kino")
+mpa_plot2(B, "b")
 
-ggplot(data = B, aes(x = Ano, y = B, col = Zonificacion))+
-  geom_line()+
-  geom_point() +
-  geom_errorbar(aes(ymin=B-BDS,ymax=B+BDS), width = 0.2)+
-  theme_bw()+
-  labs(x="Año", y="Biomasa (gramos / transecto)")+
-  scale_color_brewer(palette = "Set1")
+```
+
+```{r, results = 'asis'}
+
+BP <- B %>%
+  group_by(Ano, Zonificacion) %>%
+  summarize(B = mean(B)) %>%
+  filter(Zonificacion == "Zona de Pesca ")
+modelBP <- lm(B ~ Ano, data = BP)
+
+BR <- B %>%
+  group_by(Ano, Zonificacion) %>%
+  summarize(B = mean(B)) %>%
+  filter(Zonificacion == "Zona de no Pesca ")
+modelBR <- lm(B ~ Ano, data = BR)
+
+stargazer(modelBP, modelBR, type = "latex", dep.var.caption = "Densidad", omit.stat = c("n"), title = "Modelos lineales describiendo cambios en las densidades promedio por zona.", column.labels = c("Pesca", "Reserva"), covariate.labels = "Año", report = "vct*", single.row = TRUE)
 
 ```
 
@@ -149,42 +164,78 @@ ggplot(data = B, aes(x = Ano, y = B, col = Zonificacion))+
 
 ```{r}
 
-NT <- datos %>%
-  group_by(Ano, Zonificacion) %>%
-  summarize(NT1 = mean(NT, na.rm=T), NTS = sd(NT, na.rm=T))
-
-ggplot(data = NT, aes(x = Ano, y = NT1, col = Zonificacion))+
-  geom_line()+
-  geom_point() +
-  geom_errorbar(aes(ymin=NT1-NTS,ymax=NT1+NTS), width = 0.2)+
-  theme_bw()+
-  labs(x="Año", y="Nivel trófico medio")+
-  scale_color_brewer(palette = "Set1")
+NT <- trophic(data = datos, location = "Bahia de Kino")
+mpa_plot2(NT, "t")
 
 ```
 
-## NT peces
+```{r, results = 'asis'}
 
-```{r}
+NTP <- NT %>%
+  group_by(Ano, Zonificacion) %>%
+  summarize(NT = mean(mean)) %>%
+  filter(Zonificacion == "Zona de Pesca ")
+modelNTP <- lm(NT ~ Ano, data = NTP)
 
-NT_P <- datos %>%
-  filter(Zonificacion == "Zona de Pesca ") %>%
+NTR <- NT %>%
+  group_by(Ano, Zonificacion) %>%
+  summarize(NT = mean(mean)) %>%
+  filter(Zonificacion == "Zona de no Pesca ")
+modelNTR <- lm(NT ~ Ano, data = NTR)
+
+stargazer(modelNTP, modelNTR, type = "latex", dep.var.caption = "Densidad", omit.stat = c("n"), title = "Modelos lineales describiendo cambios en las densidades promedio por zona.", column.labels = c("Pesca", "Reserva"), covariate.labels = "Año", report = "vct*", single.row = TRUE)
+
+```
+
+
+## Proporciones de Nivel Trófico en Peces
+
+```{r, results = 'asis'}
+
+NT2 <- datos %>%
   filter(!is.na(NT)) %>%
-  mutate(NT = floor(NT)) %>%
-  group_by(Ano, NT) %>%
-  summarize(Abundancia = mean(Abundancia)) %>%
+  filter(Abundancia > 0) %>%
+  mutate(NT = as.factor(floor(NT))) %>%
+  group_by(Ano, Zonificacion, Sitio, Transecto, NT) %>%
+  summarize(Abundancia = sum(Abundancia)) %>%
+  group_by(Ano, Zonificacion, NT) %>%
+  summarize(Abundancia = mean(Abundancia))
+
+
+ggplot(NT2, aes(x = Ano, y = Abundancia, factor = NT, color = NT))+
+  geom_point()+
+  geom_line()+
+  theme_bw()+
+  facet_grid(.~Zonificacion)+
+  scale_color_brewer(palette = "Set1")
+
+# Para zonas de pesca
+NT_P <- NT2 %>%
+  ungroup() %>%
+  filter(Zonificacion == "Zona de Pesca ") %>%
+  select(-Zonificacion) %>%
   spread(Ano, Abundancia)
 
-
 rows <- unique(NT_P$NT)
-
 NT_P <- as.data.frame(NT_P[-1])
-
 rownames(NT_P) <- rows
-
 pro.NT_P<- prop.table(as.matrix(NT_P),2)
+XsqP <- chisq.test(pro.NT_P)
+print(XsqP)
 
-Xsq <- chisq.test(pro.NT_P, correct = T)
+# Para zonas de no pesca
+NT_R <- NT2 %>%
+  ungroup() %>%
+  filter(Zonificacion == "Zona de no Pesca ") %>%
+  select(-Zonificacion) %>%
+  spread(Ano, Abundancia)
+
+rows <- unique(NT_R$NT)
+NT_R <- as.data.frame(NT_R[-1])
+rownames(NT_R) <- rows
+pro.NT_R<- prop.table(as.matrix(NT_R),2)
+XsqR <- chisq.test(pro.NT_R)
+print(XsqR)
 
 ```
 
