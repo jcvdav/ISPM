@@ -385,7 +385,6 @@ N <- peces_objetivo %>%
   group_by(Ano, Zonificacion, GeneroEspecie) %>%
   summarize(D = mean(Abundancia), DSD = sd(Abundancia))
 
-windows()
 ggplot(data = N, aes(x = Ano, y = D, color = Zonificacion))+
   geom_point()+
   geom_line()+
