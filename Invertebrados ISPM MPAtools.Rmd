@@ -1,0 +1,78 @@
+---
+title: "Invertebrados ISPM MPAtools"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = T,fig.height = 3,warning = F)
+```
+```{r}
+suppressPackageStartupMessages({
+  library(ggplot2)
+  library(dplyr)
+  library(tidyr)
+  library(MPAtools)
+  library(reshape)
+  library(stargazer)
+  library(ggExtra)
+})
+
+```
+```{r}
+datosi <- read.csv("./invertebradosISPM_JCVD16082016.csv",sep = ",") %>%
+  filter(!GeneroEspecie == "Octopus sp.")
+```
+
+```{r}
+N <- density(datosi, "Bahia de Kino")
+mpa_plot2(N, "d")
+
+```
+
+```{r, results='asis'}
+NP <- N %>%
+  group_by(Ano, Zonificacion) %>%
+  summarize(N = mean(D)) %>%
+  filter(Zonificacion == "Zona de Pesca")
+modelNP <- lm(N~Ano, data = NP)
+
+NR <- N %>%
+  group_by(Ano, Zonificacion) %>%
+  summarize(N = mean(D)) %>%
+  filter(Zonificacion == "Zona de Pesca")
+modelNR <- lm(N~Ano, data = NR)
+
+
+stargazer(modelNP, modelNR, type = "html", dep.var.caption = "Densidad", omit.stat = c("rsq", "n"), title = "Modelos linealies describiendo los cambios en las densidades promedio por zona para (1) pesca y (2) No Pesca.")
+
+```
+
+
+```{r}
+S <- richness(datosi, "Bahia de Kino")
+mpa_plot2(S, "s")
+
+```
+
+```{r, results='asis'}
+SP <- S %>%
+  group_by(Ano, Zonificacion) %>%
+  summarize(S = mean(S)) %>%
+  filter(Zonificacion == "Zona de Pesca")
+modelSP <- lm(S~Ano, data = SP)
+
+SR <- S %>%
+  group_by(Ano, Zonificacion) %>%
+  summarize(S = mean(S)) %>%
+  filter(Zonificacion == "Zona de Pesca")
+modelSR <- lm(S~Ano, data = SR)
+
+stargazer(modelSP, modelSR, type = "html", dep.var.caption = "Riqueza", omit.stat = c("rsq", "n"), title = "Modelos linealies describiendo los cambios en la Riqueza promedio por zona para (1) pesca y (2) No Pesca.")
+
+```
+
+
+
+
+
+

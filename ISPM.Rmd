@@ -66,7 +66,13 @@ datos <- datos %>%
 
 \clearpage
 
-# Indicadores Peces (Pesca vs. No Pesca)
+# Peces
+
+## Estructura comunitaria
+
+![Escalamiento multidimensional no métrico para peces. Los marcadores en negro y gris representan zonas de pesca y no pesca, respectivamente.](nMDS_peces.jpg)
+
+\clearpage
 
 ## Densidad promedio por zona
 
@@ -98,9 +104,9 @@ N2 <- datos %>%
   group_by(Ano, Zonificacion) %>%
   summarize(N = mean(N, na.rm=T), Temp = mean(Temp, na.rm=T))
 
-modelNT <- lm(N ~ Ano + Zonificacion + Temp, data = N2)
+modelNT <- lm(N ~ Ano + Temp, data = N2)
 
-stargazer(modelNP, modelNR, modelNT, type = "latex", dep.var.caption = "Densidad", omit.stat = c("n"), title = "Modelos lineales describiendo cambios en las densidades promedio por zona.", column.labels = c("Pesca", "Reserva"), covariate.labels = c("Año", "Zonificacion", "Temperatura"), report = "vct*", single.row = TRUE)
+stargazer(modelNP, modelNR, modelNT, type = "latex", dep.var.caption = "Densidad (orgs / transecto)", omit.stat = c("n"), title = "Modelos lineales describiendo cambios en las densidades promedio por zona.", column.labels = c("Pesca", "Reserva"), covariate.labels = c("Año", "Zonificacion", "Temperatura"), report = "vct*", single.row = TRUE)
 
 ```
 
@@ -125,10 +131,10 @@ modelSP <- lm(S ~ Ano, data = SP)
   group_by(Ano, Zonificacion) %>%
   summarize(S = mean(S)) %>%
   filter(Zonificacion == "Zona de no Pesca ")
-modelSR <- lm(S ~ Ano, data = SP)
+modelSR <- lm(S ~ Ano, data = SR)
 
 
-stargazer(modelSP, modelSR, type = "latex", dep.var.caption = "Densidad", omit.stat = c("n"), title = "Modelos lineales describiendo cambios en las densidades promedio por zona.", column.labels = c("Pesca", "Reserva"), covariate.labels = "Año", report = "vct*", single.row = TRUE)
+stargazer(modelSP, modelSR, type = "latex", dep.var.caption = "Riqueza (s / transecto)", omit.stat = c("n"), title = "Modelos lineales describiendo cambios en las densidades promedio por zona.", column.labels = c("Pesca", "Reserva"), covariate.labels = "Año", report = "vct*", single.row = TRUE)
 
 ```
 
@@ -141,6 +147,20 @@ B <- fish_biomass(data = datos, location = "Bahia de Kino")
 mpa_plot2(B, "b")
 
 ```
+
+```{r}
+
+data <- B %>% group_by(Ano, Zonificacion) %>% mutate(BSD = sd(B, 
+            na.rm = T), B = mean(B, na.rm = T))
+
+ggplot(data, aes(x = Ano, y = B, color = Zonificacion)) + 
+  geom_point() +
+  geom_line() +
+  theme_bw() +
+  scale_color_brewer(palette = "Set1")
+
+```
+
 
 ```{r, results = 'asis'}
 
@@ -156,9 +176,11 @@ BR <- B %>%
   filter(Zonificacion == "Zona de no Pesca ")
 modelBR <- lm(B ~ Ano, data = BR)
 
-stargazer(modelBP, modelBR, type = "latex", dep.var.caption = "Densidad", omit.stat = c("n"), title = "Modelos lineales describiendo cambios en las densidades promedio por zona.", column.labels = c("Pesca", "Reserva"), covariate.labels = "Año", report = "vct*", single.row = TRUE)
+stargazer(modelBP, modelBR, type = "latex", dep.var.caption = "Biomasa (grs)", omit.stat = c("rsq", "n"), title = "Modelos lineales describiendo cambios en las densidades promedio por zona.", column.labels = c("Pesca", "Reserva"), covariate.labels = c("Año"), report = "vct*", single.row = TRUE)
 
 ```
+
+\clearpage
 
 ## Nivel trófico promedio por zona
 
@@ -183,7 +205,7 @@ NTR <- NT %>%
   filter(Zonificacion == "Zona de no Pesca ")
 modelNTR <- lm(NT ~ Ano, data = NTR)
 
-stargazer(modelNTP, modelNTR, type = "latex", dep.var.caption = "Densidad", omit.stat = c("n"), title = "Modelos lineales describiendo cambios en las densidades promedio por zona.", column.labels = c("Pesca", "Reserva"), covariate.labels = "Año", report = "vct*", single.row = TRUE)
+stargazer(modelNTP, modelNTR, type = "latex", dep.var.caption = "Nivel Trófico", omit.stat = c("rsq", "n"), title = "Modelos lineales describiendo cambios en las densidades promedio por zona.", column.labels = c("Pesca", "Reserva"), covariate.labels = c("Año"), report = "vct*", single.row = TRUE)
 
 ```
 
@@ -263,9 +285,95 @@ print(XsqR)
 #   group_by(id, Dia, Mes, Ano, Estado, Comunidad, Sitio, Latitud, Longitud, Habitat, Zonificacion, TipoProteccion, ANP, BuzoMonitor, HoraInicial, HoraFinal, ProfundidadInicial, ProfundidadFinal, Temperatura, Visibilidad, Corriente, Transecto, Genero, Especie, GeneroEspecie) %>%
 #   summarize(Abundancia = sum(Abundancia))
 
-invert <- read.csv("~/GitHub/ISPM/Datos/limpios/invertebradosISPM_JCVD16082016.csv")
+# invert <- read.csv("~/GitHub/ISPM/Datos/limpios/invertebradosISPM_JCVD16082016.csv")
+
+```
+
+```{r}
+datosi <- read.csv("./Datos/limpios/invertebradosISPM_JCVD16082016.csv",sep = ",") %>%
+  filter(!GeneroEspecie == "Octopus sp.")
+```
+
+## Estructura comunitaria
+
+![Escalamiento multidimensional no métrico para invertebrados. Los marcadores rojos y azules representan zonas de pesca y no pesca, respectivamente.](nMDS_inverts.jpg)
+
+\clearpage
+
+## Densidad promedio por zona
+
+```{r}
+N <- density(datosi, "Bahia de Kino")
+mpa_plot2(N, "d")
+
+```
+
+```{r}
+datosi2 <- datosi %>%
+  filter(!GeneroEspecie == "Eucidaris thouarsii")
+
+N2 <- density(datosi2, "Bahia de Kino")
+mpa_plot2(N2, "d")
+
+```
+
+```{r, results='asis'}
+NP <- N %>%
+  group_by(Ano, Zonificacion) %>%
+  summarize(N = mean(D)) %>%
+  filter(Zonificacion == "Zona de Pesca")
+modelNP <- lm(N~Ano, data = NP)
+
+NR <- N %>%
+  group_by(Ano, Zonificacion) %>%
+  summarize(N = mean(D)) %>%
+  filter(Zonificacion == "Zona de no Pesca")
+modelNR <- lm(N~Ano, data = NR)
+
+
+stargazer(modelNP, modelNR, type = "latex", dep.var.caption = "Densidad (org / transecto)", omit.stat = c("rsq", "n"), title = "Modelos lineales describiendo cambios en las densidades promedio por zona.", column.labels = c("Pesca", "Reserva"), covariate.labels = c("Año"), report = "vct*", single.row = TRUE)
+
+```
+
+\clearpage
+
+## Riqueza promedio por zona
+
+```{r}
+S <- richness(datosi, "Bahia de Kino")
+mpa_plot2(S, "s")
+
+```
+
+```{r, results='asis'}
+SP <- S %>%
+  group_by(Ano, Zonificacion) %>%
+  summarize(S = mean(S)) %>%
+  filter(Zonificacion == "Zona de Pesca")
+modelSP <- lm(S~Ano, data = SP)
+
+SR <- S %>%
+  group_by(Ano, Zonificacion) %>%
+  summarize(S = mean(S)) %>%
+  filter(Zonificacion == "Zona de no Pesca")
+modelSR <- lm(S~Ano, data = SR)
+
+stargazer(modelSP, modelSR, type = "latex", dep.var.caption = "Riqueza", omit.stat = c("rsq", "n"), title = "Modelos lineales describiendo cambios en las densidades promedio por zona.", column.labels = c("Pesca", "Reserva"), covariate.labels = c("Año"), report = "vct*", single.row = TRUE)
 
 ```
 
 
 
+# Especies objetivo de RBISPM
+
+## Mycteroperca jordani
+
+## Mycteroperca prionura
+
+## Mycteroperca rosacea
+
+## Lutjanus argentiventris
+
+## Hoplopagrus guntherii
+
+## Scarus ghobban
