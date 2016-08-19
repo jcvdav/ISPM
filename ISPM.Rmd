@@ -366,6 +366,15 @@ stargazer(modelSP, modelSR, type = "latex", dep.var.caption = "Riqueza", omit.st
 
 # Especies objetivo de RBISPM
 
+```{r}
+
+SpObj <- datos %>%
+  filter(GeneroEspecie == "Mycteroperca jordani" |
+           GeneroEspecie == "Mycteroperca prionura")
+
+```
+
+
 ## Mycteroperca jordani
 
 ## Mycteroperca prionura
