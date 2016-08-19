@@ -74,7 +74,7 @@ datos <- datos %>%
 
 \clearpage
 
-## Densidad promedio por zonificacion
+## Densidad promedio por zona
 
 ```{r}
 
