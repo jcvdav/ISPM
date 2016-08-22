@@ -362,7 +362,6 @@ stargazer(modelSP, modelSR, type = "latex", dep.var.caption = "Riqueza", omit.st
 
 ```
 
-\clearpage
 
 # Especies objetivo de RBISPM
 
@@ -371,7 +370,8 @@ stargazer(modelSP, modelSR, type = "latex", dep.var.caption = "Riqueza", omit.st
 load("peces_objetivo.RData")
 
 peces_objetivo <- filter(peces_objetivo, !is.na(Zonificacion)) %>%
-  mutate(W = Abundancia*a*(Talla^b)/1000)
+  mutate(W = Abundancia*a*(Talla^b)/1000) %>%
+  filter(Ano >= 2007)
 
 peces_objetivo$W[is.na(peces_objetivo$W)] <- 0
 
@@ -388,14 +388,13 @@ N <- peces_objetivo %>%
 ggplot(data = N, aes(x = Ano, y = D, color = Zonificacion))+
   geom_point()+
   geom_line()+
-  geom_errorbar(aes(ymin = D-DSD, ymax = D+DSD))+
+  # geom_errorbar(aes(ymin = D-DSD, ymax = D+DSD))+
   facet_wrap(~GeneroEspecie, ncol = 2, scales = "free_y")+
   theme_bw()+
-  scale_color_brewer(palette = "Set1")
+  scale_color_brewer(palette = "Set1")+
+  labs(x = "Año", y = "Densidad (org / transecto)")
 
 ```
-
-\clearpage
 
 ## Biomasa
 
@@ -408,23 +407,24 @@ B <- peces_objetivo %>%
 ggplot(data = B, aes(x = Ano, y = B, color = Zonificacion))+
   geom_point()+
   geom_line()+
-  geom_errorbar(aes(ymin = B-BSD, ymax = B+BSD))+
+  # geom_errorbar(aes(ymin = B-BSD, ymax = B+BSD))+
   facet_wrap(~GeneroEspecie, ncol = 2, scales = "free_y")+
   theme_bw()+
-  scale_color_brewer(palette = "Set1")
+  scale_color_brewer(palette = "Set1")+
+  labs(x = "Año", y = "Biomasa (Kg / transecto)")
 
 ```
 
+## Tallas
 
-## Mycteroperca jordani
+```{r, fig.height=10, fig.width = 7}
 
-## Mycteroperca prionura
+H <- untable(peces_objetivo, num = peces_objetivo$Abundancia)
 
-## Mycteroperca rosacea
+ggplot(H, aes(x = Ano, y = Talla, group = Ano)) +
+  geom_jitter(size = 0, aes(color = Ano)) +
+  geom_boxplot(alpha = 0.5, outlier.size = 0, outlier.color = "white") +
+  facet_grid(GeneroEspecie~Zonificacion, scales = "free")+
+  theme_bw()
 
-## Lutjanus argentiventris
-
-## Hoplopagrus guntherii
-
-## Scarus ghobban
-
+```
