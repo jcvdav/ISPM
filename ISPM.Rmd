@@ -59,8 +59,7 @@ suppressPackageStartupMessages({
 
 load("Peces.Rdata")
 
-datos <- datos %>%
-  mutate(TL = NT)
+datos <- datos
 
 ```
 
@@ -79,34 +78,15 @@ datos <- datos %>%
 ```{r}
 
 N <- density(datos, "Bahia de Kino")
-mpa_plot2(N, "d")
+mpa_plot2(N)
+
+modelNp <- lm(D ~ Ano + Zonificacion, data = N)
 
 ```
 
 ```{r, results = 'asis'}
 
-NP <- N %>%
-  group_by(Ano, Zonificacion) %>%
-  summarize(N = mean (D)) %>%
-  filter(Zonificacion == "Zona de Pesca ")
-modelNP <- lm(N ~ Ano, data = NP)
-
-NR <- N %>%
-  group_by(Ano, Zonificacion) %>%
-  summarize(N = mean (D)) %>%
-  filter(Zonificacion == "Zona de no Pesca ")
-modelNR <- lm(N ~ Ano, data = NR)
-
-N2 <- datos %>%
-  mutate(Temperatura = as.numeric(as.character(Temperatura))) %>%
-  group_by(Ano, Zonificacion, Sitio, Transecto) %>%
-  summarize(N = sum(Abundancia, na.rm=T), Temp = mean(Temperatura, na.rm = T)) %>%
-  group_by(Ano, Zonificacion) %>%
-  summarize(N = mean(N, na.rm=T), Temp = mean(Temp, na.rm=T))
-
-modelNT <- lm(N ~ Ano + Temp, data = N2)
-
-stargazer(modelNP, modelNR, modelNT, type = "latex", dep.var.caption = "Densidad (orgs / transecto)", omit.stat = c("n"), title = "Modelos lineales describiendo cambios en las densidades promedio por zona.", column.labels = c("Pesca", "Reserva"), covariate.labels = c("Año", "Zonificacion", "Temperatura"), report = "vct*", single.row = TRUE)
+stargazer(modelNp, type = "latex", dep.var.caption = "Densidad (orgs / transecto)", omit.stat = c("n"), title = "Modelos lineales describiendo cambios en las densidades promedio por zona.", column.labels = c("Pesca", "Reserva"), covariate.labels = c("Año", "Zonificacion", "Temperatura"), report = "vct*", single.row = TRUE)
 
 ```
 
@@ -115,7 +95,7 @@ stargazer(modelNP, modelNR, modelNT, type = "latex", dep.var.caption = "Densidad
 ```{r}
 
 S <- richness(data = datos, location = "Bahia de Kino")
-mpa_plot2(S, "s")
+mpa_plot2(S)
 
 ```
 
@@ -144,7 +124,7 @@ stargazer(modelSP, modelSR, type = "latex", dep.var.caption = "Riqueza (s / tran
 ```{r}
 
 B <- fish_biomass(data = datos, location = "Bahia de Kino")
-mpa_plot2(B, "b")
+mpa_plot2(B)
 
 ```
 
@@ -187,7 +167,7 @@ stargazer(modelBP, modelBR, type = "latex", dep.var.caption = "Biomasa (grs)", o
 ```{r}
 
 NT <- trophic(data = datos, location = "Bahia de Kino")
-mpa_plot2(NT, "t")
+mpa_plot2(NT)
 
 ```
 
@@ -304,7 +284,7 @@ datosi <- read.csv("./Datos/limpios/invertebradosISPM_JCVD16082016.csv",sep = ",
 
 ```{r}
 N <- density(datosi, "Bahia de Kino")
-mpa_plot2(N, "d")
+mpa_plot2(N)
 
 ```
 
@@ -313,7 +293,7 @@ datosi2 <- datosi %>%
   filter(!GeneroEspecie == "Eucidaris thouarsii")
 
 N2 <- density(datosi2, "Bahia de Kino")
-mpa_plot2(N2, "d")
+mpa_plot2(N2)
 
 ```
 
@@ -341,7 +321,7 @@ stargazer(modelNP, modelNR, type = "latex", dep.var.caption = "Densidad (org / t
 
 ```{r}
 S <- richness(datosi, "Bahia de Kino")
-mpa_plot2(S, "s")
+mpa_plot2(S)
 
 ```
 
