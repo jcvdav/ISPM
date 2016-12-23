@@ -1,0 +1,528 @@
+---
+title: "Anális de ISPM"
+output:
+  html_document: 
+    fig_caption: yes
+    highlight: tango
+    number_sections: yes
+    theme: cerulean
+    toc: yes
+    toc_depth: 6
+---
+
+```{r establecer opciones predeterminadas}
+knitr::opts_chunk$set(echo = T, fig.height = 4, warning = F, message = F, results = 'asis')
+```
+
+
+```{r cargar paquetes}
+# Cargamos todos los paquetes que necesitamos dentro de Suppress... para que no salgan mensajes
+
+suppressPackageStartupMessages({
+  
+  library(tidyverse) #Cargamos dplyr, tidyr, ggplot, y muchos mas al mismo tiempo
+  
+  # devtools::install_github("turfeffect/MPAtools") # Correr esta linea para descargar el MPAtools mas actualizado
+  library(MPAtools) #Cargamos MPAtools
+  
+  library(stargazer) #Cargamos el paquete para hacer tablas "bonitas"
+})
+
+windowsFonts(Times=windowsFont("TT Times New Roman")) # Mi compu no tenia la fuente, puede ser que sea necesario comentar esta linea en otras computadoras
+
+```
+
+
+```{r cargar datos}
+
+load("fish_data.RData") #Cargamos la base de datos nacional, se llama fish_data
+
+```
+
+## Peces
+
+## Resumen de esfuerzo muestral
+
+```{r}
+
+```
+
+### Variables ambientales
+
+```{r, fig.height = 10, fig.width = 14, fig.cap = "Serie de tiempo de covariables utilizadas en la evaluación de los sitios monitoreados en la reserva (azul) y zona control (rojo). Cada punto representa la profundidad, temperatura y visibilidad de cada transecto. Los puntos y líneas negras representan la media anual por tratamiento para cada serie de tiempo. El sombreado representa +-1DS. Los puntos se presentan con un 'jitter' para reducir traslape."}
+fish_data %>% 
+  group_by(Ano, Zonificacion, Sitio, Transecto) %>% 
+  summarize(Temperatura = mean(Temperatura, na.rm = T),
+            Visibilidad = mean(Visibilidad, na.rm = T),
+            Profundidad = mean(ProfundidadInicial, na.rm = T)) %>% 
+  gather(Variable, Valor, -c(1:4)) %>% 
+  ggplot(aes(x = Ano, y = Valor, color = Zonificacion, fill = Zonificacion)) +
+  geom_jitter(width = 0.2, size = 1) +
+  stat_summary(fun.y = mean, geom = "point", color = "black") +
+  stat_summary(fun.y = mean, geom = "line", color = "black") +
+  stat_summary(fun.data = mean_se, geom = "ribbon", alpha = 0.5) +
+  scale_color_brewer(palette = "Set1") +
+  scale_fill_brewer(palette = "Set1") +
+  theme_bw() +
+  theme(text=element_text(family="Times")) +
+  facet_wrap(~Variable, ncol = 2, scales = "free_y")
+```
+
+
+### Índice de diversidad de Shannon
+
+```{r calcular shannon}
+ind1 <- shannon(data = fish_data, location = "Bahia de Kino") #Calcula el indice de diversidad de shannon con log2
+```
+
+
+```{r graficar shannon, fig.cap = "Índice de diversidad de Shannon (en log base 2) para sitios monitoreados en la reserva (azul) y zona control (rojo). Cada punto representa un transecto realizado. Los puntos y líneas negras representan la media anual por tratamiento. El sombreado representa +-1DS. Los transectos individuales se presentan con un 'jitter' para reducir traslape."}
+
+ggplot(ind1, aes(x = Ano, y = H, color = Zonificacion, fill = Zonificacion)) +
+  geom_jitter(width = 0.2, size = 1) +
+  stat_summary(fun.y = mean, geom = "point", color = "black") +
+  stat_summary(fun.y = mean, geom = "line", color = "black") +
+  stat_summary(fun.data = mean_se, geom = "ribbon", alpha = 0.5) +
+  scale_color_brewer(palette = "Set1") +
+  scale_fill_brewer(palette = "Set1") +
+  theme_bw() +
+  theme(text=element_text(family="Times")) +
+  labs(x = "Año", y = "H' (Diversidad de Shannon / Transecto)")
+```
+
+
+```{r modelo1}
+
+ind1.2 <- ind1
+ind1.2$Zonificacion <- 0
+ind1.2$Zonificacion[ind1$Zonificacion == "Reserva"] <- 1
+mod1 <- lm(H ~ Ano + Zonificacion + Ano*Zonificacion + Temperatura + Visibilidad + Profundidad, data = ind1.2)
+
+stargazer(mod1, dep.var.labels = "H", title = "Coeficientes de correlación para el modelo de evaluación. El coeficiente que indica la efectividad es el de Ano:Zona. Los simbolos de '+' indican los niveles de significancia.", type = "html", dep.var.caption = "", single.row = T, omit.stat = c("adj.rsq"), digits = 2, df = F, covariate.labels = c("Ano", "Zona", "Temperatura", "Visibilidad", "Profundidad", "**Ano:Zona**", "Constante"), notes = "+p < 0.1, ++p<0.05, +++p<0.001", notes.append = FALSE, star.char = "+")
+
+```
+
+
+### Riqueza
+
+#### Hay que eliminar este chunk despues de re-installar MPAtools
+```{r}
+
+richness <- function(data, location){
+  library(dplyr) #Load dplyr
+  library(tidyr) #Load tidyr
+
+  S <- data %>% #Set S equal to data
+    filter(Comunidad == location) %>% #Filter by location
+    filter(Abundancia > 0) %>%
+    group_by(Ano,
+             Zonificacion,
+             Sitio,
+             Transecto,
+             GeneroEspecie) %>%
+    summarize(N = n(),
+              Temperatura = mean(Temperatura, na.rm = T),
+              Visibilidad = mean(Visibilidad, na.rm = T),
+              Profundidad = mean(ProfundidadInicial, na.rm = T)) %>%
+    group_by(Ano,
+             Zonificacion,
+             Sitio,
+             Transecto) %>%
+    summarize(S = n(),
+              Temperatura = mean(Temperatura, na.rm = T),
+              Visibilidad = mean(Visibilidad, na.rm = T),
+              Profundidad = mean(Profundidad, na.rm = T))
+
+  return(as.data.frame(S))
+}
+
+```
+
+
+```{r calcular riqueza}
+ind2 <- richness(data = fish_data, location = "Bahia de Kino") #Calcula el indice de diversidad de shannon con log2
+```
+
+
+```{r graficar riqueza, fig.cap = "Riqueza específica para sitios monitoreados en la reserva (azul) y zona control (rojo). Cada punto representa un transecto realizado. Los puntos y líneas negras representan la media anual por tratamiento. El sombreado representa +-1DS. Los transectos individuales se presentan con un 'jitter' para reducir traslape."}
+
+ggplot(ind2, aes(x = Ano, y = S, color = Zonificacion, fill = Zonificacion)) +
+  geom_jitter(width = 0.2, size = 1) +
+  stat_summary(fun.y = mean, geom = "point", color = "black") +
+  stat_summary(fun.y = mean, geom = "line", color = "black") +
+  stat_summary(fun.data = mean_se, geom = "ribbon", alpha = 0.5) +
+  scale_color_brewer(palette = "Set1") +
+  scale_fill_brewer(palette = "Set1") +
+  theme_bw() +
+  theme(text=element_text(family="Times")) +
+  labs(x = "Año", y = "Riqueza (spp / transecto)")
+```
+
+
+```{r modelo2}
+
+ind2.2 <- ind2
+ind2.2$Zonificacion <- 0
+ind2.2$Zonificacion[ind2$Zonificacion == "Reserva"] <- 1
+mod2 <- lm(S ~ Ano + Zonificacion + Ano*Zonificacion + Temperatura + Visibilidad + Profundidad, data = ind2.2)
+
+stargazer(mod2, dep.var.labels = "S", title = "Coeficientes de correlación para el modelo de evaluación. El coeficiente que indica la efectividad es el de Ano:Zona. Los simbolos de '+' indican los niveles de significancia.", type = "html", dep.var.caption = "", single.row = T, omit.stat = c("adj.rsq"), digits = 2, df = F, covariate.labels = c("Ano", "Zona", "Temperatura", "Visibilidad", "Profundidad", "**Ano:Zona**", "Constante"), notes = "+p < 0.1, ++p<0.05, +++p<0.001", notes.append = FALSE, star.char = "+")
+
+```
+
+
+### Densidad
+
+#### Hay que eliminar este chunk despues de re-installar MPAtools
+```{r}
+
+density <- function(data, location, species = NULL){
+  library(dplyr)  # Load dplyr
+  library(tidyr)  # Load tidyr
+
+  # Evaluate if it must calculate density ofr a single species or for all species
+  if(is.null(species)){
+    D <- data %>%                    #Set D equal to data
+      filter(Comunidad == location) %>%      # filter by location
+      group_by(Ano,
+               Zonificacion,
+               Sitio,
+               Transecto) %>% #Group by year, zone, transect number and species
+      summarize(D = sum(Abundancia, na.rm = T)/60,
+                Temperatura = mean(Temperatura, na.rm = T),
+                Visibilidad = mean(Visibilidad, na.rm = T),
+                Profundidad = mean(ProfundidadInicial, na.rm = T))       #Calculate abundance by species by transect
+  } else { #Else indicates that a single species has been selected
+    D <- data %>%                    #Set D equal to data
+      filter(Comunidad == location) %>%      #Filter by location
+      filter(GeneroEspecie == species) %>% #Filter by species
+      group_by(Ano,
+               Zonificacion,
+               Sitio,
+               Transecto) %>% #Group by year, zone, transect number and species
+      summarize(D = sum(Abundancia, na.rm = T)/60,
+                Temperatura = mean(Temperatura, na.rm = T),
+                Visibilidad = mean(Visibilidad, na.rm = T),
+                Profundidad = mean(ProfundidadInicial, na.rm = T))
+  }
+
+  return(as.data.frame(D))                       #Return D
+}
+
+```
+
+
+```{r calcular densidad}
+ind3 <- density(data = fish_data, location = "Bahia de Kino") #Calcula el indice de diversidad de shannon con log2
+```
+
+
+```{r graficar densidad, fig.cap = "Densidad (org / m2) para sitios monitoreados en la reserva (azul) y zona control (rojo). Cada punto representa un transecto realizado. Los puntos y líneas negras representan la media anual por tratamiento. El sombreado representa +-1DS. Los transectos individuales se presentan con un 'jitter' para reducir traslape."}
+
+ggplot(ind3, aes(x = Ano, y = D, color = Zonificacion, fill = Zonificacion)) +
+  geom_jitter(width = 0.2, size = 1) +
+  stat_summary(fun.y = mean, geom = "point", color = "black") +
+  stat_summary(fun.y = mean, geom = "line", color = "black") +
+  stat_summary(fun.data = mean_se, geom = "ribbon", alpha = 0.5) +
+  scale_color_brewer(palette = "Set1") +
+  scale_fill_brewer(palette = "Set1") +
+  theme_bw() +
+  theme(text=element_text(family="Times")) +
+  labs(x = "Año", y = "Densidad (Org m^-2)")
+```
+
+
+```{r modelo3}
+
+ind3.2 <- ind3
+ind3.2$Zonificacion <- 0
+ind3.2$Zonificacion[ind3$Zonificacion == "Reserva"] <- 1
+mod3 <- lm(D ~ Ano + Zonificacion + Ano*Zonificacion + Temperatura + Visibilidad + Profundidad, data = ind3.2)
+
+stargazer(mod3, dep.var.labels = "D", title = "Coeficientes de correlación para el modelo de evaluación. El coeficiente que indica la efectividad es el de Ano:Zona. Los simbolos de '+' indican los niveles de significancia.", type = "html", dep.var.caption = "", single.row = T, omit.stat = c("adj.rsq"), digits = 2, df = F, covariate.labels = c("Ano", "Zona", "Temperatura", "Visibilidad", "Profundidad", "**Ano:Zona**", "Constante"), notes = "+p < 0.1, ++p<0.05, +++p<0.001", notes.append = FALSE, star.char = "+")
+
+```
+
+
+
+### Densidad de especies objetivo
+
+```{r densidad objetivo}
+
+ind4 <- fish_data %>% 
+  filter(GeneroEspecie == "Mycteroperca rosacea"|
+           GeneroEspecie == "Mycteroperca jordani"|
+           GeneroEspecie == "Mycteroperca prionura"|
+           GeneroEspecie == "Hoplopagrus guentherii"|
+           GeneroEspecie == "Lutjanus argentiventris"|
+           GeneroEspecie == "Scarus ghobban") %>% 
+  group_by(Ano,
+           Zonificacion,
+           Sitio,
+           Transecto,
+           GeneroEspecie) %>%
+  summarize(D = sum(Abundancia, na.rm = T)/60,
+            Temperatura = mean(Temperatura, na.rm = T),
+            Visibilidad = mean(Visibilidad, na.rm = T),
+            Profundidad = mean(ProfundidadInicial, na.rm = T))
+
+```
+
+```{r graficar densidad sp obj, fig.cap = "Densidad (org / m2) para sitios monitoreados en la reserva (azul) y zona control (rojo). Cada punto representa un transecto realizado. Los puntos y líneas negras representan la media anual por tratamiento. El sombreado representa +-1DS. Los transectos individuales se presentan con un 'jitter' para reducir traslape.", fig.height=10, fig.width = 10}
+
+ggplot(ind4, aes(x = Ano, y = D, color = Zonificacion, fill = Zonificacion)) +
+  geom_jitter(width = 0.2, size = 1) +
+  stat_summary(fun.y = mean, geom = "point", color = "black") +
+  stat_summary(fun.y = mean, geom = "line", color = "black") +
+  stat_summary(fun.data = mean_se, geom = "ribbon", alpha = 0.5) +
+  scale_color_brewer(palette = "Set1") +
+  scale_fill_brewer(palette = "Set1") +
+  theme_bw() +
+  theme(text=element_text(family="Times")) +
+  labs(x = "Año", y = "Densidad (Org m^-2)") +
+  facet_wrap(~GeneroEspecie, scales = "free_y", ncol = 2)
+```
+
+
+```{r modelo4}
+
+ind4.2 <- ind4
+ind4.2$Zonificacion <- 0
+ind4.2$Zonificacion[ind4$Zonificacion == "Reserva"] <- 1
+mod4 <- with(ind4.2,
+             by(ind4.2, GeneroEspecie, function(x){lm(D ~ Ano + Zonificacion + Ano*Zonificacion + Temperatura + Visibilidad + Profundidad, data = x)}))
+
+stargazer(mod4$`Hoplopagrus guentherii`,
+          mod4$`Lutjanus argentiventris`,
+          mod4$`Mycteroperca jordani`,
+          mod4$`Mycteroperca prionura`,
+          mod4$`Mycteroperca rosacea`,
+          mod4$`Scarus ghobban`,
+          dep.var.labels = "D", title = "Coeficientes de correlación para el modelo de evaluación. El coeficiente que indica la efectividad es el de Ano:Zona. Los simbolos de '+' indican los niveles de significancia.", type = "html", dep.var.caption = "", omit.stat = c("adj.rsq"), digits = 2, df = F, covariate.labels = c("Ano", "Zona", "Temperatura", "Visibilidad", "Profundidad", "**Ano:Zona**", "Constante"), notes = "+p < 0.1, ++p<0.05, +++p<0.001", notes.append = FALSE, star.char = "+", column.labels = c("H. guentherii   |", "L. argentiventris   |", "M. jordani   |", "M. prionura   |", "M. rosacea   |", "S. ghobban"), report = "vc*")
+
+```
+
+
+### Organismos > LT_50
+
+### Nivel trófico
+
+#### Hay que eliminar este chunk despues de re-installar MPAtools
+```{r}
+
+trophic <- function(data, location){
+  library(dplyr)
+  library(tidyr)
+  library(reshape)
+
+  data <- filter(data, Comunidad == location) %>%
+    group_by(Ano,
+             Zonificacion,
+             Sitio,
+             Transecto) %>%
+    summarize(NT = mean(NT, na.rm=TRUE),
+              Temperatura = mean(Temperatura, na.rm = T),
+              Visibilidad = mean(Visibilidad, na.rm = T),
+              Profundidad = mean(ProfundidadInicial, na.rm = T))
+
+
+  return(as.data.frame(data))
+
+}
+
+```
+
+
+```{r calcular nivel trofico}
+data(abnt)
+ind6 <- trophic(data = left_join(fish_data, abnt, by = "GeneroEspecie"), location = "Bahia de Kino") #Calcula el indice de diversidad de shannon con log2
+```
+
+
+```{r graficar nivel trofico, fig.cap = "Nivel trofico medio para sitios monitoreados en la reserva (azul) y zona control (rojo). Cada punto representa un transecto realizado. Los puntos y líneas negras representan la media anual por tratamiento. El sombreado representa +-1DS. Los transectos individuales se presentan con un 'jitter' para reducir traslape."}
+
+ggplot(ind6, aes(x = Ano, y = NT, color = Zonificacion, fill = Zonificacion)) +
+  geom_jitter(width = 0.2, size = 1) +
+  stat_summary(fun.y = mean, geom = "point", color = "black") +
+  stat_summary(fun.y = mean, geom = "line", color = "black") +
+  stat_summary(fun.data = mean_se, geom = "ribbon", alpha = 0.5) +
+  scale_color_brewer(palette = "Set1") +
+  scale_fill_brewer(palette = "Set1") +
+  theme_bw() +
+  theme(text=element_text(family="Times")) +
+  labs(x = "Año", y = "Nivel trofico medio / transecto")
+```
+
+
+```{r modelo6}
+
+ind6.2 <- ind6
+ind6.2$Zonificacion <- 0
+ind6.2$Zonificacion[ind6$Zonificacion == "Reserva"] <- 1
+mod6 <- lm(NT ~ Ano + Zonificacion + Ano*Zonificacion + Temperatura + Visibilidad + Profundidad, data = ind6.2)
+
+stargazer(mod6, dep.var.labels = "NT", title = "Coeficientes de correlación para el modelo de evaluación. El coeficiente que indica la efectividad es el de Ano:Zona. Los simbolos de '+' indican los niveles de significancia.", type = "html", dep.var.caption = "", single.row = T, omit.stat = c("adj.rsq"), digits = 2, df = F, covariate.labels = c("Ano", "Zona", "Temperatura", "Visibilidad", "Profundidad", "**Ano:Zona**", "Constante"), notes = "+p < 0.1, ++p<0.05, +++p<0.001", notes.append = FALSE, star.char = "+")
+
+```
+
+
+### Biomasa
+
+#### Hay que eliminar este chunk despues de re-installar MPAtools
+```{r}
+fish_biomass <- function(data, location, species = NULL){
+  library(dplyr)   #Load dplyr package
+  library(tidyr)   #Load tidyr package
+  
+  #If no ab database is passed, checks to see if the data passed has it within the columns or loads default ab database
+  
+  data <- data %>%   #Join data with the database that has a and b parameters
+    mutate(W = Abundancia*a*(Talla^b)/1000)                 #Create Weight variable
+  
+  if(is.null(species)){ #If a single species is not targeted, calculates biomass for all species
+    B <- data %>% #Set b equals to data
+      filter(Comunidad == location) %>%                #Filter by location
+      group_by(Ano,
+               Zonificacion,
+               Sitio,
+               Transecto) %>%         #Group by year, zone, site, transect number, and species
+      summarize(B = sum(W, na.rm = T)/60, #Create a sum of the weight for selected species
+                Temperatura = mean(Temperatura, na.rm = T),
+                Visibilidad = mean(Visibilidad, na.rm = T),
+                Profundidad = mean(ProfundidadInicial, na.rm = T))
+  } else {                                 #If a species is selected
+    B <- data %>%                             #Set B equals to data
+      filter(Comunidad == location) %>%               #Filter by side
+      filter(GeneroEspecie == species) %>%   #Filter by species
+      group_by(Ano,
+               Zonificacion,
+               Sitio,
+               Transecto,
+               GeneroEspecie) %>%         #Group by year, zone, site, transect number, and species
+      summarize(B = sum(W, na.rm = T)/60, #Create a sum of the weight for selected species
+                Temperatura = mean(Temperatura, na.rm = T),
+                Visibilidad = mean(Visibilidad, na.rm = T),
+                Profundidad = mean(ProfundidadInicial, na.rm = T))                   
+  }
+  
+  return(as.data.frame(B))                               #Return B
+  
+}
+
+```
+
+
+```{r calcular biomasa}
+ind7 <- fish_biomass(data = left_join(fish_data, abnt, by = "GeneroEspecie"), location = "Bahia de Kino") #Calcula el indice de diversidad de shannon con log2
+```
+
+
+```{r graficar biomasa log, fig.cap = "Biomasa (Kg / m^2) para sitios monitoreados en la reserva (azul) y zona control (rojo). Nótese que el eje vertical se encuentra transformado por logaritmo base 10. Cada punto representa un transecto realizado. Los puntos y líneas negras representan la media anual por tratamiento. El sombreado representa +-1DS. Los transectos individuales se presentan con un 'jitter' para reducir traslape."}
+
+ggplot(ind7, aes(x = Ano, y = log10(B), color = Zonificacion, fill = Zonificacion)) +
+  geom_jitter(width = 0.2, size = 1) +
+  stat_summary(fun.y = mean, geom = "point", color = "black") +
+  stat_summary(fun.y = mean, geom = "line", color = "black") +
+  stat_summary(fun.data = mean_se, geom = "ribbon", alpha = 0.5) +
+  scale_color_brewer(palette = "Set1") +
+  scale_fill_brewer(palette = "Set1") +
+  theme_bw() +
+  theme(text=element_text(family="Times")) +
+  labs(x = "Año", y = "log(Biomasa (Kg / m^2))")
+```
+
+```{r graficar biomasa, fig.cap = "Biomasa (Kg / m^2) para sitios monitoreados en la reserva (azul) y zona control (rojo). Cada punto representa un transecto realizado. Los puntos y líneas negras representan la media anual por tratamiento. El sombreado representa +-1DS. Los transectos individuales se presentan con un 'jitter' para reducir traslape."}
+
+ggplot(ind7, aes(x = Ano, y = B, color = Zonificacion, fill = Zonificacion)) +
+  geom_jitter(width = 0.2, size = 1) +
+  stat_summary(fun.y = mean, geom = "point", color = "black") +
+  stat_summary(fun.y = mean, geom = "line", color = "black") +
+  stat_summary(fun.data = mean_se, geom = "ribbon", alpha = 0.5) +
+  scale_color_brewer(palette = "Set1") +
+  scale_fill_brewer(palette = "Set1") +
+  theme_bw() +
+  theme(text=element_text(family="Times")) +
+  labs(x = "Año", y = "Biomasa (Kg / m^2)")
+```
+
+```{r modelo7}
+
+ind7.2 <- ind7
+ind7.2$Zonificacion <- 0
+ind7.2$Zonificacion[ind7$Zonificacion == "Reserva"] <- 1
+mod7 <- lm(log10(B) ~ Ano + Zonificacion + Ano*Zonificacion + Temperatura + Visibilidad + Profundidad, data = ind7.2)
+
+stargazer(mod7, dep.var.labels = "Biomasa", title = "Coeficientes de correlación para el modelo de evaluación. El coeficiente que indica la efectividad es el de Ano:Zona. Los simbolos de '+' indican los niveles de significancia. La biomasa fue transformada por logaritmo base 10 para lograr normalidad en los residuales.", type = "html", dep.var.caption = "", single.row = T, omit.stat = c("adj.rsq"), digits = 2, df = F, covariate.labels = c("Ano", "Zona", "Temperatura", "Visibilidad", "Profundidad", "**Ano:Zona**", "Constante"), notes = "+p < 0.1, ++p<0.05, +++p<0.001", notes.append = FALSE, star.char = "+")
+
+```
+
+
+### Biomasa de especies objetivo
+
+```{r biomasa objetivo}
+
+ind8 <- fish_data %>% 
+  filter(GeneroEspecie == "Mycteroperca rosacea"|
+           GeneroEspecie == "Mycteroperca jordani"|
+           GeneroEspecie == "Mycteroperca prionura"|
+           GeneroEspecie == "Hoplopagrus guentherii"|
+           GeneroEspecie == "Lutjanus argentiventris"|
+           GeneroEspecie == "Scarus ghobban") %>%
+  left_join(abnt, by = "GeneroEspecie") %>% 
+  mutate(W = Abundancia*a*(Talla^b)/1000) %>% 
+  group_by(Ano,
+           Zonificacion,
+           Sitio,
+           Transecto,
+           GeneroEspecie) %>%
+  summarize(B = sum(W, na.rm = T)/60,
+            Temperatura = mean(Temperatura, na.rm = T),
+            Visibilidad = mean(Visibilidad, na.rm = T),
+            Profundidad = mean(ProfundidadInicial, na.rm = T)) %>% 
+  ungroup()
+
+```
+
+```{r graficar biomasa sp obj, fig.cap = "Biomasa (Kg / m^2) para sitios monitoreados en la reserva (azul) y zona control (rojo). Cada punto representa un transecto realizado. Los puntos y líneas negras representan la media anual por tratamiento. El sombreado representa +-1DS. Los transectos individuales se presentan con un 'jitter' para reducir traslape.", fig.height=10, fig.width = 10}
+
+ggplot(ind8, aes(x = Ano, y = B, color = Zonificacion, fill = Zonificacion)) +
+  geom_jitter(width = 0.2, size = 1) +
+  stat_summary(fun.y = mean, geom = "point", color = "black") +
+  stat_summary(fun.y = mean, geom = "line", color = "black") +
+  stat_summary(fun.data = mean_se, geom = "ribbon", alpha = 0.5) +
+  scale_color_brewer(palette = "Set1") +
+  scale_fill_brewer(palette = "Set1") +
+  theme_bw() +
+  theme(text=element_text(family="Times")) +
+  labs(x = "Año", y = "Biomasa (Kg m^-2)") +
+  facet_wrap(~GeneroEspecie, scales = "free_y", ncol = 2)
+```
+
+
+```{r modelo8}
+
+ind8.2 <- ind8
+ind8.2$Zonificacion <- 0
+ind8.2$Zonificacion[ind4$Zonificacion == "Reserva"] <- 1
+mod8 <- with(ind8.2,
+             by(ind8.2, GeneroEspecie, function(x){lm(B ~ Ano + Zonificacion + Ano*Zonificacion + Temperatura + Visibilidad + Profundidad, data = x)}))
+
+stargazer(mod4$`Hoplopagrus guentherii`,
+          mod4$`Lutjanus argentiventris`,
+          mod4$`Mycteroperca jordani`,
+          mod4$`Mycteroperca prionura`,
+          mod4$`Mycteroperca rosacea`,
+          mod4$`Scarus ghobban`,
+          dep.var.labels = "D", title = "Coeficientes de correlación para el modelo de evaluación. El coeficiente que indica la efectividad es el de Ano:Zona. Los simbolos de '+' indican los niveles de significancia.", type = "html", dep.var.caption = "", omit.stat = c("adj.rsq"), digits = 2, df = F, covariate.labels = c("Ano", "Zona", "Temperatura", "Visibilidad", "Profundidad", "**Ano:Zona**", "Constante"), notes = "+p < 0.1, ++p<0.05, +++p<0.001", notes.append = FALSE, star.char = "+", column.labels = c("H. guentherii   |", "L. argentiventris   |", "M. jordani   |", "M. prionura   |", "M. rosacea   |", "S. ghobban"), report = "vc*")
+
+```
+
+## Invertebrados
+
+### Índice de diversidad de Shannon
+
+### Riqueza
+
+### Densidad
+
+### Densidad de especies objetivo
