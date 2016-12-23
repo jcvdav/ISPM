@@ -1,7 +1,10 @@
 ---
-title: "Anális de ISPM"
+title: "AnÃ¡lis de ISPM"
 output:
-  html_document: 
+  word_document:
+    toc: yes
+    toc_depth: '6'
+  html_document:
     fig_caption: yes
     highlight: tango
     number_sections: yes
